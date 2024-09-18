@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<h1>{{ club.name }}</h1>
+<p>Address: {{ club.address }}</p>
+<p>Age Requirement: {{ club.ageReq }}</p>
+<p>Categories: {{ club.categories }}</p>
+<p>Dress Code: {{ club.dressCode }}</p>
+<p>Active Days: {{ club.daysActive }}</p>
+<p>Hours: {{ club.hours }}</p>
+
+<a href="{% url 'update_club_hours' club.nightclubID %}">Update Hours</a>
+<a href="{% url 'delete_club' club.nightclubID %}">Delete Club</a>
+<body>
+
+</body>
+</html>

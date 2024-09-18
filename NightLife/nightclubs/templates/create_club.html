@@ -1,0 +1,23 @@
+<h1>Add a New NightClub</h1>
+<form method="POST">
+    {% csrf_token %}
+    <label for="name">Name:</label>
+    <input type="text" name="name" required><br>
+
+    <label for="address">Address:</label>
+    <input type="text" name="address" required><br>
+
+    <label for="ageReq">Age Requirement:</label>
+    <input type="number" name="ageReq" required><br>
+
+    <label for="categories">Categories:</label>
+    <input type="text" name="categories" required><br>
+
+    <label for="dressCode">Dress Code:</label>
+    <input type="text" name="dressCode" required><br>
+
+    <label for="daysActive">Active Days:</label>
+    <input type="text" name="daysActive" required><br>
+
+    <button type="submit">Create NightClub</button>
+</form>

@@ -1,0 +1,7 @@
+<h1>Nightclubs</h1>
+<ul>
+    {% for club in clubs %}
+    <li><a href="{% url 'club_detail' club.nightclubID %}">{{ club.name }}</a></li>
+    {% endfor %}
+</ul>
+<a href="{% url 'create_club' %}">Add a New Club</a>
