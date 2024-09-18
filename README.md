@@ -11,7 +11,6 @@
 - [Technologies](#technologies)
 - [Installation](#installation)
 - [Usage](#usage)
-- [Contributing](#contributing)
 - [License](#license)
 
 ---
@@ -61,7 +60,7 @@ The app will offer the following:
 
 The following technologies will be used to build Nightlife:
 
-- **Django 4**: Backend framework
+- **Django 4.2.16**: Backend framework
 - **SQLite3**: Default database for development
 - **HTML/CSS**: For basic templating and styling
 - **Bootstrap**: For responsive design
@@ -116,7 +115,3 @@ The following technologies will be used to build Nightlife:
 ## License
 
 This project is licensed by the creators.
-
----
-
-Feel free to customize this README to better fit your specific needs as the project develops!
