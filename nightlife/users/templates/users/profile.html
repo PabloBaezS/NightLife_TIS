@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body class="profile-page">
+
+    <!-- Header Section -->
+    <header class="profile-header">
+        <a href="{% url 'home' %}" class="back-btn">
+            <img src="{% static 'images/back-arrow.png' %}" alt="Back">
+        </a>
+        <h1>Profile</h1>
+    </header>
+
+    <!-- Profile Information Section -->
+    <section class="profile-info">
+        <h2>{{ user.username }}</h2>  <!-- User's name -->
+        <p>{{ user.email }}</p>  <!-- User's email -->
+    </section>
+
+    <!-- Logout Button -->
+    <div class="logout-section">
+        <a href="{% url 'logout' %}" class="logout-btn">Log out</a>
+    </div>
+
+</body>
+</html>

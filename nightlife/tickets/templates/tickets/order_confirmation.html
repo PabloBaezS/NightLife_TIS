@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmation - NightLife</title>
+    {% load static %} <!-- Load staticfiles tag library -->
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <header>
+        <h1>Order Confirmation</h1>
+    </header>
+
+    <section>
+        <p>Thank you for your order!</p>
+        <p>Your order ID is: <strong>{{ order.order_id }}</strong></p>
+        <p>We have saved your order. You can view it in your profile anytime.</p>
+    </section>
+</body>
+</html>

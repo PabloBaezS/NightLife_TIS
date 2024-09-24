@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart - NightLife</title>
+    {% load static %} <!-- Load staticfiles tag library -->
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <header>
+        <h1>Your Cart</h1>
+    </header>
+
+    <section>
+        {% if cart_items %}
+            <ul>
+                {% for item in cart_items %}
+                    <li>
+                        <h2>{{ item.ticket.name }}</h2>
+                        <p>Quantity: {{ item.quantity }}</p>
+                        <p>Price: ${{ item.ticket.price }}</p>
+                    </li>
+                {% endfor %}
+            </ul>
+            <a href="{% url 'order-confirmation' %}">Confirm Order</a>
+        {% else %}
+            <p>Your cart is empty.</p>
+        {% endif %}
+    </section>
+</body>
+</html>

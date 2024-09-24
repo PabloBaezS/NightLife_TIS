@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NightLife - Tickets</title>
+    {% load static %} <!-- Load staticfiles tag library -->
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <header>
+        <h1>Available Tickets</h1>
+    </header>
+
+    <section>
+        {% for ticket in tickets %}
+            <div class="ticket">
+                <h2>{{ ticket.name }}</h2>
+                <p>Category: {{ ticket.get_category_display }}</p>
+                <p>Price: ${{ ticket.price }}</p>
+                <p>NightClub: {{ ticket.nightclub.name }}</p>
+                <img src="{{ ticket.image.url }}" alt="{{ ticket.name }}">
+                <a href="{% url 'ticket-detail' ticket.pk %}">View Details</a>
+            </div>
+        {% endfor %}
+    </section>
+</body>
+</html>
