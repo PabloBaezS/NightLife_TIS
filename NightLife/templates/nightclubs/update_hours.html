@@ -1,7 +1,0 @@
-<h1>Update Club Hours for {{ club.name }}</h1>
-<form method="POST">
-    {% csrf_token %}
-    <label for="hours">New Hours:</label>
-    <input type="text" name="hours" value="{{ club.hours }}" required><br>
-    <button type="submit">Update Hours</button>
-</form>
