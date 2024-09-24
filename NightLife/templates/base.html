@@ -1,0 +1,36 @@
+{% load static %}  <!-- Load the static tag -->
+<link rel="stylesheet" href="{% static 'css/style.css' %}">  <!-- Reference your CSS file -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}NightLife{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+
+    <!-- Navbar (can be shared across pages) -->
+    <nav>
+        <ul>
+            <li><a href="{% url 'landing_page' %}">Home</a></li>
+            <li><a href="{% url 'signup' %}">Sign Up</a></li>
+            <li><a href="{% url 'login' %}">Log In</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main content block to be overridden by individual templates -->
+    <main>
+        {% block content %}
+        <!-- This will be replaced by specific content from child templates -->
+        {% endblock %}
+    </main>
+
+    <!-- Footer (can be shared across pages) -->
+    <footer>
+        <p>© 2024 NightLife. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>
