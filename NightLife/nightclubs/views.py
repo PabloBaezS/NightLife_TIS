@@ -54,3 +54,8 @@ def delete_club(request, nightclubID):
         club.deleteNightclub()
         return redirect('club_list')
     return render(request, 'nightclubs/delete_club.html', {'club': club})
+
+
+def landing_page(request):
+    return render(request, 'landing_page.html')  # Assuming 'landing_page.html' is the template for the landing page
+

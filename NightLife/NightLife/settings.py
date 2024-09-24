@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from pathlib import Path
 
+AUTH_USER_MODEL = 'accounts.CustomUser' # Custom user model
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -40,7 +42,7 @@ INSTALLED_APPS = [
     # Custom Apps for NightLife Project
     "accounts",
     "nightclubs",
-    "covers"
+    "covers",
 ]
 
 MIDDLEWARE = [
@@ -57,19 +59,20 @@ ROOT_URLCONF = "NightLife.urls"
 
 TEMPLATES = [
     {
-        "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
-        "APP_DIRS": True,
-        "OPTIONS": {
-            "context_processors": [
-                "django.template.context_processors.debug",
-                "django.template.context_processors.request",
-                "django.contrib.auth.context_processors.auth",
-                "django.contrib.messages.context_processors.messages",
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [BASE_DIR / 'templates'],  # Tell Django where to find the global templates directory
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
             ],
         },
     },
 ]
+
 
 WSGI_APPLICATION = "NightLife.wsgi.application"
 
@@ -125,3 +128,13 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+AUTH_USER_MODEL = 'accounts.CustomUser'
+
+# Ensure you also have this if you're in development
+STATICFILES_DIRS = [
+    BASE_DIR / "static",  # This tells Django where to look for static files like CSS and JS
+]
+
+# If you are using STATIC_ROOT for production, it should also be defined:
+STATIC_ROOT = BASE_DIR / 'staticfiles'
