@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ nightclub.name }} - Details</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+
+    <header class="header">
+        <div class="logo-section">
+            <img src="{% static 'images/logo.png' %}" alt="Logo" class="logo">
+            <h1>{{ nightclub.name }}</h1>
+        </div>
+    </header>
+
+    <div class="nightclub-info">
+        <p>Address: {{ nightclub.address }}</p>
+        <p>Description: {{ nightclub.description }}</p>
+    </div>
+
+    <h2>Tickets for {{ nightclub.name }}</h2>
+    <ul class="nightclubs">
+        {% for ticket in tickets %}
+        <li class="nightclub-card">
+            <div class="nightclub-info">
+                <h3>{{ ticket.get_ticket_type_display }} - ${{ ticket.price }}</h3>
+                <p>{{ ticket.description }}</p>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+
+    <h2>Create New Ticket</h2>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="auth-button red-button">Add Ticket</button>
+    </form>
+
+    <a href="{% url 'admin-dashboard' %}" class="auth-button">Back to Dashboard</a>
+
+</body>
+</html>
