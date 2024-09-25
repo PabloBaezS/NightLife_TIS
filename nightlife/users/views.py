@@ -3,9 +3,11 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from .models import UserProfile
-from django.shortcuts import render, redirect
-from django.contrib.auth.models import User
-from .models import UserProfile
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.admin.views.decorators import staff_member_required
+from tickets.models import NightClub, Ticket
+from tickets.forms import NightClubForm, TicketForm  # You'll create these forms later
+
 
 def register(request):
     if request.method == 'POST':
@@ -55,3 +57,75 @@ def logout_view(request):
 @login_required
 def profile_view(request):
     return render(request, 'users/profile.html')
+
+# Admin dashboard view
+@staff_member_required
+def admin_dashboard(request):
+    nightclubs = NightClub.objects.all()
+    return render(request, 'users/admin_dashboard.html', {'nightclubs': nightclubs})
+
+# Create nightclub view
+@staff_member_required
+def create_nightclub(request):
+    if request.method == 'POST':
+        form = NightClubForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('admin-dashboard')
+    else:
+        form = NightClubForm()
+    return render(request, 'users/create_nightclub.html', {'form': form})
+
+# Edit nightclub view
+@staff_member_required
+def edit_nightclub(request, pk):
+    nightclub = get_object_or_404(NightClub, pk=pk)
+    if request.method == 'POST':
+        form = NightClubForm(request.POST, request.FILES, instance=nightclub)
+        if form.is_valid():
+            form.save()
+            return redirect('admin-dashboard')
+    else:
+        form = NightClubForm(instance=nightclub)
+    return render(request, 'users/edit_nightclub.html', {'form': form, 'nightclub': nightclub})
+
+# Delete nightclub view
+@staff_member_required
+def delete_nightclub(request, pk):
+    nightclub = get_object_or_404(NightClub, pk=pk)
+    if request.method == 'POST':
+        nightclub.delete()
+        return redirect('admin-dashboard')
+    return render(request, 'users/delete_nightclub.html', {'nightclub': nightclub})
+
+
+from django.shortcuts import render, redirect, get_object_or_404
+from tickets.models import NightClub, Ticket
+from tickets.forms import TicketForm
+from django.contrib.admin.views.decorators import staff_member_required
+
+
+@staff_member_required
+def nightclub_detail(request, pk):
+    nightclub = get_object_or_404(NightClub, pk=pk)
+
+    # Handle ticket creation
+    if request.method == 'POST':
+        form = TicketForm(request.POST)
+        if form.is_valid():
+            ticket = form.save(commit=False)
+            ticket.nightclub = nightclub  # Assign the nightclub to the ticket
+            ticket.save()
+            return redirect('nightclub-detail',
+                            pk=nightclub.pk)  # Redirect to the same page after ticket creation
+    else:
+        form = TicketForm()
+
+    # Get all tickets for this nightclub
+    tickets = Ticket.objects.filter(nightclub=nightclub)
+
+    return render(request, 'users/nightclub_detail.html', {
+        'nightclub': nightclub,
+        'tickets': tickets,
+        'form': form,
+    })

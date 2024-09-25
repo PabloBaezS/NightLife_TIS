@@ -9,18 +9,25 @@
 </head>
 <body class="homepage">
 
-    <!-- Header Section -->
-    <header class="header">
-        <div class="logo-section">
-            <img src="{% static 'images/logo.png' %}" alt="NightLife Logo" class="logo">
-            <h1>NightLife</h1>
-        </div>
-        <div class="header-icons">
+<!-- Header Section -->
+<header class="header">
+    <div class="logo-section">
+        <img src="{% static 'images/logo.png' %}" alt="NightLife Logo" class="logo">
+        <h1>NightLife</h1>
+    </div>
+    <div class="header-icons">
+        {% if user.is_authenticated %}
+            <!-- Profile Icon for logged-in users -->
             <a href="{% url 'profile' %}" class="profile-icon">
                 <img src="{% static 'images/profile-icon.png' %}" alt="Profile Icon">
             </a>
-        </div>
-    </header>
+        {% else %}
+            <!-- Red buttons for Sign Up and Login -->
+            <a href="{% url 'register' %}" class="auth-button red-button">Sign Up</a>
+            <a href="{% url 'login' %}" class="auth-button red-button">Login</a>
+        {% endif %}
+    </div>
+</header>
 
     <!-- Search Bar -->
     <section class="search-section">

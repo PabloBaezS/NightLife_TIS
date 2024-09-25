@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NightLife - Sign Up</title>
+    <title>NightLife - Register</title>
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
-<body class="signup-page">
+<body class="register-page">
 
     <!-- Logo and App Name -->
     <header class="login-header">
@@ -23,10 +23,9 @@
         </div>
     </header>
 
-    <!-- Sign Up Form -->
-    <div class="signup-container">
+    <!-- Register Form -->
+    <div class="register-container">
         <h2>Register for a better experience</h2>
-
         <form method="POST">
             {% csrf_token %}
 
@@ -52,24 +51,15 @@
 
             <!-- Password Input -->
             <div class="input-group">
-                <div class="password-input">
-                    <input type="password" name="password" placeholder="Password" required>
-
-                </div>
+                <input type="password" name="password" placeholder="Password" required>
             </div>
 
             <!-- Confirm Password Input -->
             <div class="input-group">
-                <div class="password-input">
-                    <input type="password" name="confirm_password" placeholder="Confirm Password" required>
-                </div>
+                <input type="password" name="confirm_password" placeholder="Confirm Password" required>
             </div>
 
-            <button type="submit" class="signup-btn">Create Account</button>
-
-            {% if error %}
-            <p class="error-message">{{ error }}</p>
-            {% endif %}
+            <button type="submit" class="register-btn">Create Account</button>
         </form>
 
         <!-- Skip for Now Link -->
@@ -77,5 +67,6 @@
             <a href="#" class="skip-btn">Skip for now <span>&#10145;</span></a>
         </div>
     </div>
+
 </body>
 </html>

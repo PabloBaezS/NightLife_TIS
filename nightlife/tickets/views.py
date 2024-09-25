@@ -1,6 +1,8 @@
-from django.shortcuts import render, get_object_or_404, redirect
 from .models import Ticket, CartItem, Order
-from .models import NightClub
+from django.contrib.admin.views.decorators import staff_member_required
+from django.shortcuts import render, redirect, get_object_or_404
+from .models import NightClub, Ticket
+from .forms import NightClubForm, TicketForm
 
 
 def TicketListView(request):
@@ -36,3 +38,29 @@ def order_confirmation(request):
 def home_view(request):
     nightclubs = NightClub.objects.all()
     return render(request, 'tickets/home.html', {'nightclubs': nightclubs})
+
+
+@staff_member_required
+def create_nightclub_view(request):
+    if request.method == 'POST':
+        form = NightClubForm(request.POST, request.FILES)
+        ticket_formset = TicketForm(request.POST)
+
+        if form.is_valid() and ticket_formset.is_valid():
+            nightclub = form.save()
+
+            # Save ticket information
+            for form in ticket_formset:
+                ticket = form.save(commit=False)
+                ticket.nightclub = nightclub
+                ticket.save()
+
+            return redirect('admin-dashboard')  # Redirect to the admin dashboard
+    else:
+        form = NightClubForm()
+        ticket_formset = TicketForm()
+
+    return render(request, 'admin/create_nightclub.html', {
+        'form': form,
+        'ticket_formset': ticket_formset
+    })
