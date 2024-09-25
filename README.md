@@ -1,6 +1,7 @@
 # Nightlife
+![Logo Nightlife](https://github.com/user-attachments/assets/ba8b9601-ae5d-481c-8f88-21c140734abb)
 
-![Logo Nightlife](https://github.com/user-attachments/assets/5797db7a-3cc3-419f-914d-2b5d1a416ab5)
+
 
 **Nightlife** is a mobile-first application designed to streamline the booking and purchasing experience in nightclubs across Medellín. The app allows users to reserve tables, buy tickets, and access exclusive club offers. Nightlife also includes an admin interface for nightclub owners to manage their offerings.
 
