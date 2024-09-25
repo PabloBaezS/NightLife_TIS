@@ -1,12 +1,13 @@
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from .models import UserProfile
-from django.shortcuts import render, redirect, get_object_or_404
+from tickets.forms import NightClubForm, TicketForm
+from tickets.forms import TicketForm
+from django.shortcuts import render, get_object_or_404, redirect
+from tickets.models import Ticket, NightClub
+from .forms import TicketForm
 from django.contrib.admin.views.decorators import staff_member_required
-from tickets.models import NightClub, Ticket
-from tickets.forms import NightClubForm, TicketForm  # You'll create these forms later
 
 
 def register(request):
@@ -99,11 +100,6 @@ def delete_nightclub(request, pk):
     return render(request, 'users/delete_nightclub.html', {'nightclub': nightclub})
 
 
-from django.shortcuts import render, redirect, get_object_or_404
-from tickets.models import NightClub, Ticket
-from tickets.forms import TicketForm
-from django.contrib.admin.views.decorators import staff_member_required
-
 
 @staff_member_required
 def nightclub_detail(request, pk):
@@ -116,12 +112,11 @@ def nightclub_detail(request, pk):
             ticket = form.save(commit=False)
             ticket.nightclub = nightclub  # Assign the nightclub to the ticket
             ticket.save()
-            return redirect('nightclub-detail',
-                            pk=nightclub.pk)  # Redirect to the same page after ticket creation
+            return redirect('nightclub-detail', pk=nightclub.pk)  # Redirect to the same page after ticket creation
     else:
         form = TicketForm()
 
-    # Get all tickets for this nightclub
+    # Only fetch tickets that belong to this nightclub
     tickets = Ticket.objects.filter(nightclub=nightclub)
 
     return render(request, 'users/nightclub_detail.html', {

@@ -21,6 +21,14 @@
     <section class="profile-info">
         <h2>{{ user.username }}</h2>  <!-- User's name -->
         <p>{{ user.email }}</p>  <!-- User's email -->
+        <h2>{{ user.userprofile.id_number }}</h2>  <!-- ID Number -->
+<p>Order History:</p>
+<ul>
+    {% for order in user.userprofile.order_set.all %}
+        <li>Order {{ order.id }} - ${{ order.total_price }} ({{ order.created_at }})</li>
+    {% endfor %}
+</ul>
+
     </section>
 
     <!-- Superuser Admin Dashboard Button -->

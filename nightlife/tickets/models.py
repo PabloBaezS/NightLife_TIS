@@ -27,18 +27,28 @@ class Ticket(models.Model):
 
 
 class CartItem(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     ticket = models.ForeignKey(Ticket, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(default=1)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f"{self.ticket.name} - {self.quantity}"
+        return f"{self.quantity} of {self.ticket.get_ticket_type_display()}"
+
 
 class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    order_id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
-    tickets = models.ManyToManyField(CartItem)
+    total_price = models.DecimalField(max_digits=10, decimal_places=2)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return str(self.order_id)
+        return f"Order {self.id} by {self.user.username}"
+
+
+class Payment(models.Model):
+    order = models.ForeignKey(Order, on_delete=models.CASCADE)  # Make sure this is a ForeignKey
+    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    payment_status = models.CharField(max_length=20, default='pending')
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Payment for Order {self.order.id}"

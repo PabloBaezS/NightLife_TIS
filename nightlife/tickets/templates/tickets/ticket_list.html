@@ -3,27 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NightLife - Tickets</title>
-    {% load static %} <!-- Load staticfiles tag library -->
+    <title>{{ nightclub.name }} - Tickets</title>
+    {% load static %}
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
 <body>
     <header class="ticket-header">
-        <h1>Available Tickets</h1>
+        <h1>Available Tickets for {{ nightclub.name }}</h1>
     </header>
 
     <section class="ticket-grid">
-        {% for ticket in tickets %}
-            <div class="ticket-card">
-                <div class="ticket-info">
-                    <h2>{{ ticket.get_ticket_type_display }}</h2> <!-- Displaying ticket type -->
-                    <p>Category: {{ ticket.get_ticket_type_display }}</p> <!-- Also ticket type, since it's the category in this case -->
-                    <p>Price: ${{ ticket.price }}</p>
-                    <p>NightClub: {{ ticket.nightclub.name }}</p>
-                    <a href="{% url 'ticket-detail' ticket.pk %}" class="ticket-details-button">View Details</a>
-                </div>
+    {% for ticket in tickets %}
+        <div class="ticket-card">
+            <div class="ticket-info">
+                <h2>{{ ticket.get_ticket_type_display }}</h2>
+                <p>Price: ${{ ticket.price }}</p>
+                <p>Description: {{ ticket.description }}</p>
+                <a href="{% url 'ticket-detail' ticket.pk %}" class="ticket-details-button">View Details</a>
             </div>
-        {% endfor %}
-    </section>
+        </div>
+    {% endfor %}
+</section>
+
+
+    <!-- If no tickets available, display a message -->
+    {% if tickets|length == 0 %}
+        <p>No tickets available for this nightclub.</p>
+    {% endif %}
+
 </body>
 </html>

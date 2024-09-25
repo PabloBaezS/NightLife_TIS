@@ -1,5 +1,5 @@
 from django import forms
-from .models import NightClub, Ticket
+from tickets.models import NightClub, Ticket
 
 class NightClubForm(forms.ModelForm):
     class Meta:
