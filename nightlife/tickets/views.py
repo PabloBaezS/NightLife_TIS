@@ -3,6 +3,7 @@ from django.contrib.admin.views.decorators import staff_member_required
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import NightClub, Ticket
 from .forms import NightClubForm, TicketForm
+from .models import Ticket
 
 
 def TicketListView(request):
@@ -64,3 +65,11 @@ def create_nightclub_view(request):
         'form': form,
         'ticket_formset': ticket_formset
     })
+
+
+def delete_ticket(request, pk):
+    ticket = get_object_or_404(Ticket, pk=pk)
+    nightclub = ticket.nightclub  # Save the related nightclub before deleting
+    ticket.delete()
+    return redirect('nightclub-detail', pk=nightclub.pk)  # Redirect to the same nightclub detail page
+

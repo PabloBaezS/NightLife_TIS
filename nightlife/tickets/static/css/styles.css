@@ -7,33 +7,54 @@ body {
     display: flex;
     flex-direction: column;
 }
-/* General header styling */
-.header {
+
+.nightclub-actions {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-between; /* Aligns arrow to left and buttons to the right */
     align-items: center;
-    padding: 20px;
-    background-color: #000117;
+    margin-top: 10px;
 }
 
-.logo-section {
+.edit-delete-buttons {
     display: flex;
-    align-items: center;
+    gap: 10px;  /* Adds spacing between Edit and Delete buttons */
 }
 
-.logo {
-    height: 40px;
-    margin-right: 10px;
-}
-
-h1 {
-    font-size: 24px;
+.auth-button {
+    padding: 10px 20px;
+    border-radius: 25px;
     color: white;
+    font-size: 16px;
+    text-decoration: none;
 }
 
-.header-icons {
+.red-button {
+    background-color: #F60800;
+}
+
+.red-button:hover {
+    background-color: #6B3FA0;
+}
+
+/* Aligning the "Details" arrow icon separately from Edit/Delete buttons */
+.details-button {
+    font-size: 24px;
+    color: #F60800;
+    text-decoration: none;
+}
+
+.details-button:hover {
+    color: #6B3FA0;
+}
+
+.nightclub-card {
     display: flex;
+    justify-content: space-between; /* Ensure card is spaced correctly */
     align-items: center;
+    background-color: #1c1c1c;
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 15px;
 }
 
 /* Profile Icon Styling */
@@ -41,6 +62,39 @@ h1 {
     height: 35px;
     width: 35px;
     border-radius: 50%;
+}
+
+.details-button {
+    font-size: 24px;
+    color: #F60800;
+    text-decoration: none;
+    margin-right: 15px;  /* Add spacing between the arrow and buttons */
+}
+
+.details-button:hover {
+    color: #6B3FA0;
+    text-decoration: none;
+}
+
+/* Remove arrow from within the button */
+.auth-button {
+    position: relative;  /* Allow us to use z-index if needed */
+    padding: 10px 20px;
+    border-radius: 25px;
+    color: white;
+    font-size: 16px;
+    text-decoration: none;
+    background-color: #F60800;
+}
+
+.auth-button:hover {
+    background-color: #6B3FA0;
+}
+
+/* Fix for arrow issue with the button */
+.auth-button:focus {
+    outline: none; /* Remove focus outline */
+    z-index: 1;  /* Ensure the button is always above other elements */
 }
 
 /* Button Styling for Sign Up and Login */
@@ -390,4 +444,101 @@ button.register-btn:hover {
     background-color: #F60800;
 }
 
-/*
+.header-icons {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;  /* Aligns the profile icon to the right */
+    flex-grow: 1;
+}
+
+.profile-icon img {
+    height: 35px;
+    width: 35px;
+    border-radius: 50%;
+    margin-left: 15px;
+}
+
+.admin-section {
+    display: flex;
+    justify-content: center;  /* Center the button horizontally */
+    margin-top: 20px;  /* Add some spacing */
+}
+
+.auth-button {
+    padding: 10px 20px;
+    border-radius: 25px;
+    color: white;
+    font-size: 16px;
+    text-decoration: none;
+    background-color: #F60800;
+    text-align: center;
+}
+
+.auth-button:hover {
+    background-color: #6B3FA0;
+}
+
+.ticket-header {
+    text-align: center;
+    background-color: #000117;
+    color: #fff;
+    padding: 20px;
+}
+/* General Header Styling */
+.ticket-header {
+    text-align: center;
+    background-color: #000117;
+    color: white;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+/* Ticket Grid Layout */
+.ticket-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    padding: 20px;
+    margin: 0 auto;
+}
+
+/* Individual Ticket Card Styling */
+.ticket-card {
+    background-color: #1c1c1c;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.3s;
+}
+
+.ticket-card:hover {
+    transform: translateY(-5px);
+}
+
+/* Ticket Information */
+.ticket-info h2 {
+    color: white;
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.ticket-info p {
+    color: #bbb;
+    margin: 5px 0;
+}
+
+/* View Details Button */
+.ticket-details-button {
+    display: inline-block;
+    background-color: #F60800;
+    color: white;
+    padding: 10px 15px;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+.ticket-details-button:hover {
+    background-color: #6B3FA0;
+}

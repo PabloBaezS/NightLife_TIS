@@ -8,19 +8,20 @@
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
 <body>
-    <header>
+    <header class="ticket-header">
         <h1>Available Tickets</h1>
     </header>
 
-    <section>
+    <section class="ticket-grid">
         {% for ticket in tickets %}
-            <div class="ticket">
-                <h2>{{ ticket.name }}</h2>
-                <p>Category: {{ ticket.get_category_display }}</p>
-                <p>Price: ${{ ticket.price }}</p>
-                <p>NightClub: {{ ticket.nightclub.name }}</p>
-                <img src="{{ ticket.image.url }}" alt="{{ ticket.name }}">
-                <a href="{% url 'ticket-detail' ticket.pk %}">View Details</a>
+            <div class="ticket-card">
+                <div class="ticket-info">
+                    <h2>{{ ticket.get_ticket_type_display }}</h2> <!-- Displaying ticket type -->
+                    <p>Category: {{ ticket.get_ticket_type_display }}</p> <!-- Also ticket type, since it's the category in this case -->
+                    <p>Price: ${{ ticket.price }}</p>
+                    <p>NightClub: {{ ticket.nightclub.name }}</p>
+                    <a href="{% url 'ticket-detail' ticket.pk %}" class="ticket-details-button">View Details</a>
+                </div>
             </div>
         {% endfor %}
     </section>

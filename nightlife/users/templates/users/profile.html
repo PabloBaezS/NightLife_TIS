@@ -23,6 +23,14 @@
         <p>{{ user.email }}</p>  <!-- User's email -->
     </section>
 
+    <!-- Superuser Admin Dashboard Button -->
+    {% if user.is_superuser %}
+<div class="admin-section">
+    <a href="{% url 'admin-dashboard' %}" class="auth-button red-button">Admin Dashboard</a>
+</div>
+{% endif %}
+
+
     <!-- Logout Button -->
     <div class="logout-section">
         <a href="{% url 'logout' %}" class="logout-btn">Log out</a>

@@ -7,4 +7,6 @@ urlpatterns = [
     path('tickets/<int:pk>/', views.TicketDetailView, name='ticket-detail'),
     path('cart/', views.cart_view, name='cart'),
     path('order-confirmation/', views.order_confirmation, name='order-confirmation'),
+    path('delete-ticket/<int:pk>/', views.delete_ticket, name='delete-ticket'),
+
 ]

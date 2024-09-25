@@ -28,9 +28,15 @@
                     <h3>{{ nightclub.name }}</h3>
                     <p>{{ nightclub.address }}</p>
                 </div>
-                <a href="{% url 'nightclub-detail' nightclub.id %}" class="arrow-icon">&#10145;</a>
-                <a href="{% url 'edit-nightclub' nightclub.id %}" class="auth-button red-button">Edit</a>
-                <a href="{% url 'delete-nightclub' nightclub.id %}" class="auth-button red-button">Delete</a>
+                <div class="nightclub-actions">
+                    <!-- Details button (arrow) -->
+                    <a href="{% url 'nightclub-detail' nightclub.id %}" class="auth-button red-button">Tickets-Details</a>
+                    <!-- Edit/Delete buttons grouped together -->
+                    <div class="edit-delete-buttons">
+                        <a href="{% url 'edit-nightclub' nightclub.id %}" class="auth-button red-button">Edit</a>
+                        <a href="{% url 'delete-nightclub' nightclub.id %}" class="auth-button red-button">Delete</a>
+                    </div>
+                </div>
             </li>
             {% endfor %}
         </ul>

@@ -49,7 +49,6 @@
                 <div class="nightclub-info">
                     <h3>{{ nightclub.name }}</h3>
                     <p>{{ nightclub.address }}</p>
-                    <p>Horarios: {{ nightclub.hours }}</p>
                 </div>
                 <a href="{% url 'ticket-list' %}?nightclub={{ nightclub.id }}" class="arrow-icon">
                     <span>&#10145;</span>
