@@ -1,6 +1,0 @@
-Django==4.2.16
-djangorestframework==3.12.4  # If you're using Django REST Framework
-Pillow==8.3.1                # For handling images in Django (if using ImageField)
-psycopg2==2.9.1              # For PostgreSQL database support (optional)
-mysqlclient==2.0.3           # For MySQL database support (optional)
-gunicorn==20.1.0             # For deployment (optional, if using Gunicorn)
