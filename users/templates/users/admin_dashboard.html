@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">  <!-- Linking your CSS file -->
+</head>
+<body>
+
+    <header class="header">
+        <div class="logo-section">
+            {% load static %}
+            <img src="{% static 'images/logo.png' %}" alt="Logo" class="logo">
+            <h1>Admin Dashboard</h1>
+        </div>
+    </header>
+
+    <div class="nightclub-list">
+        <h2>Nightclubs</h2>
+        <a href="{% url 'create-nightclub' %}" class="auth-button red-button">Create New Nightclub</a>
+
+        <ul class="nightclubs">
+            {% for nightclub in nightclubs %}
+            <li class="nightclub-card">
+                <div class="nightclub-info">
+                    <h3>{{ nightclub.name }}</h3>
+                    <p>{{ nightclub.address }}</p>
+                </div>
+                <div class="nightclub-actions">
+                    <!-- Details button (arrow) -->
+                    <a href="{% url 'nightclub-detail' nightclub.id %}" class="auth-button red-button">Tickets-Details</a>
+                    <!-- Edit/Delete buttons grouped together -->
+                    <div class="edit-delete-buttons">
+                        <a href="{% url 'edit-nightclub' nightclub.id %}" class="auth-button red-button">Edit</a>
+                        <a href="{% url 'delete-nightclub' nightclub.id %}" class="auth-button red-button">Delete</a>
+                    </div>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+</body>
+</html>

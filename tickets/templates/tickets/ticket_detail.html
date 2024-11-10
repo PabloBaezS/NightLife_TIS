@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ ticket.name }} - NightLife</title>
+    {% load static %} <!-- Load staticfiles tag library -->
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <header class="ticket-header">
+        <h1>{{ ticket.name }}</h1>
+    </header>
+
+    <section class="ticket-card">
+        <div class="ticket-details">
+            <p><strong>Description:</strong> {{ ticket.description }}</p>
+            <p><strong>Price:</strong> ${{ ticket.price }}</p>
+            <p><strong>Category:</strong> {{ ticket.get_category_display }}</p>
+            <p><strong>NightClub:</strong> {{ ticket.nightclub.name }}</p>
+            <form method="POST" class="ticket-form">
+                {% csrf_token %}
+                <label for="quantity" class="quantity-label">Quantity:</label>
+                <input type="number" name="quantity" value="1" min="1" max="20" class="quantity-input">
+                <button type="submit" class="add-to-cart-button">Add to Cart</button>
+            </form>
+        </div>
+    </section>
+</body>
+</html>
