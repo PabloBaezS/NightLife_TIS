@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NightLife - Login</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body class="login-page">
+
+    <!-- Logo and App Name -->
+    <header class="login-header">
+        <div class="logo-section">
+            <img src="{% static 'images/logo.png' %}" alt="NightLife Logo" class="logo">
+            <h1>NightLife</h1>
+        </div>
+
+        <!-- Login and Signup Links -->
+        <div class="auth-tabs">
+            <a href="{% url 'login' %}" class="active-tab">Sign In</a>
+            <a href="{% url 'register' %}">Sign Up</a>
+        </div>
+    </header>
+
+    <!-- Login Form -->
+    <div class="login-container">
+        <h2>Welcome back!</h2>
+        <form method="POST">
+            {% csrf_token %}
+            <div class="input-group">
+                <input type="username" name="username" placeholder="Username" required>
+            </div>
+
+            <div class="input-group">
+                <input type="password" name="password" placeholder="Password" required>
+            </div>
+
+            <button type="submit" class="login-btn">Login</button>
+
+            {% if error %}
+            <p class="error-message">{{ error }}</p>
+            {% endif %}
+        </form>
+    </div>
+
+</body>
+</html>

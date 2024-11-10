@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NightLife - Register</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body class="register-page">
+
+    <!-- Logo and App Name -->
+    <header class="login-header">
+        <div class="logo-section">
+            <img src="{% static 'images/logo.png' %}" alt="NightLife Logo" class="logo">
+            <h1>NightLife</h1>
+        </div>
+
+        <!-- Login and Signup Links -->
+        <div class="auth-tabs">
+            <a href="{% url 'login' %}">Log in</a>
+            <a href="{% url 'register' %}" class="active-tab">Sign up</a>
+        </div>
+    </header>
+
+    <!-- Register Form -->
+    <div class="register-container">
+        <h2>Register for a better experience</h2>
+        <form method="POST">
+            {% csrf_token %}
+
+            <!-- Email Input -->
+            <div class="input-group">
+                <input type="email" name="email" placeholder="Email" required>
+            </div>
+
+            <!-- Full Name Input -->
+            <div class="input-group">
+                <input type="text" name="full_name" placeholder="Full name" required>
+            </div>
+
+            <!-- ID Type and ID Number Inputs -->
+            <div class="input-group id-group">
+                <select name="id_type" class="id-type">
+                    <option value="ID">ID Type</option>
+                    <option value="passport">Passport</option>
+                    <option value="driver_license">Driver’s License</option>
+                </select>
+                <input type="text" name="id_number" placeholder="Identification document" required>
+            </div>
+
+            <!-- Password Input -->
+            <div class="input-group">
+                <input type="password" name="password" placeholder="Password" required>
+            </div>
+
+            <!-- Confirm Password Input -->
+            <div class="input-group">
+                <input type="password" name="confirm_password" placeholder="Confirm Password" required>
+            </div>
+
+            <button type="submit" class="register-btn">Create Account</button>
+        </form>
+
+        <!-- Skip for Now Link -->
+        <div class="skip-link">
+            <a href="#" class="skip-btn">Skip for now <span>&#10145;</span></a>
+        </div>
+    </div>
+
+</body>
+</html>
