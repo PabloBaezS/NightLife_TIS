@@ -1,3 +1,5 @@
+from django.conf import settings
+
 from .models import Ticket, CartItem, Order, Payment
 from django.contrib.admin.views.decorators import staff_member_required
 from .forms import NightClubForm
@@ -21,25 +23,25 @@ def TicketListView(request, nightclub_id):
     try:
         nightclub = get_object_or_404(NightClub, pk=nightclub_id)  # Obtiene la discoteca actual
         tickets = Ticket.objects.filter(nightclub=nightclub)  # Filtra los tickets para esa discoteca
+        google_maps_api_key = settings.GOOGLE_MAPS_API_KEY
     except NightClub.DoesNotExist:
         return HttpResponse("NightClub no encontrado.", status=404)
 
     return render(request, 'tickets/ticket_list.html', {
         'nightclub': nightclub,
         'tickets': tickets,
+        'google_maps_api_key': google_maps_api_key,
     })
 
 
+@login_required(login_url='login')  # Redirige al login si el usuario no está autenticado
 def TicketDetailView(request, pk):
-    # Obtiene el ticket usando el ID del ticket
     ticket = get_object_or_404(Ticket, pk=pk)
 
     if request.method == 'POST':
-        # Agregar ticket al carrito
-        quantity = int(request.POST.get('quantity',
-                                        1))  # Por defecto, añade 1 si no se proporciona cantidad
-        CartItem.objects.create(ticket=ticket, user=request.user,
-                                quantity=quantity)
+        # Añadir ticket al carrito
+        quantity = int(request.POST.get('quantity', 1))
+        CartItem.objects.create(ticket=ticket, user=request.user, quantity=quantity)
         return redirect('cart')  # Redirige a la página del carrito
 
     return render(request, 'tickets/ticket_detail.html', {'ticket': ticket})

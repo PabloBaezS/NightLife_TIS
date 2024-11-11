@@ -62,6 +62,39 @@
     </div>
 </section>
 
+<!-- Mapa de Google al final de la página -->
+<section class="map-section">
+    <h2>Location of {{ nightclub.name }}</h2>
+    <div id="map" style="height: 400px; width: 100%;"></div>
+</section>
+
+<!-- Cargar el script de la API de Google Maps -->
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCg3kfOFObUBkngC-llaIe5oh7zD5gc1qE&callback=initMap"></script>
+
+
+<script>
+    function initMap() {
+        // Coordenadas de la discoteca
+        const nightclubLocation = {
+            lat: parseFloat({{ nightclub.latitude }}),
+            lng: parseFloat({{ nightclub.longitude }})
+        };
+
+        // Crear el mapa centrado en la discoteca
+        const map = new google.maps.Map(document.getElementById("map"), {
+            zoom: 15,
+            center: nightclubLocation,
+        });
+
+        // Crear un marcador en la ubicación de la discoteca
+        new google.maps.Marker({
+            position: nightclubLocation,
+            map: map,
+            title: "{{ nightclub.name }}"
+        });
+    }
+</script>
+
 <style>
 .nightclub-info-section {
     display: flex;
@@ -124,6 +157,16 @@
 
 .ticket-card:hover {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.map-section {
+    margin-top: 20px;
+    text-align: center;
+}
+
+#map {
+    border: 1px solid #ccc;
+    border-radius: 10px;
 }
 </style>
 
