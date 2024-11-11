@@ -82,13 +82,23 @@ def create_nightclub(request):
 def edit_nightclub(request, pk):
     nightclub = get_object_or_404(NightClub, pk=pk)
     if request.method == 'POST':
+        # Procesar el formulario con los datos enviados
         form = NightClubForm(request.POST, request.FILES, instance=nightclub)
         if form.is_valid():
+            # Guardar los cambios si el formulario es válido
             form.save()
-            return redirect('admin-dashboard')
+            # Redireccionar a una página (como el dashboard o el detalle de la discoteca)
+            return redirect('nightclub-detail',
+                            pk=nightclub.pk)  # Asegúrate de que 'nightclub-detail' es el nombre de la vista correcta
+        else:
+            print("Form errors:", form.errors)
     else:
+        # Crear el formulario con los datos existentes de la discoteca
         form = NightClubForm(instance=nightclub)
-    return render(request, 'users/edit_nightclub.html', {'form': form, 'nightclub': nightclub})
+
+    # Renderizar el formulario en la plantilla
+    return render(request, 'users/edit_nightclub.html',
+                  {'form': form, 'nightclub': nightclub})
 
 # Delete nightclub view
 @staff_member_required

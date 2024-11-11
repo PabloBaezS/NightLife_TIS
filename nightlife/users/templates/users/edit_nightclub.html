@@ -9,20 +9,157 @@
 </head>
 <body>
 
+    <!-- Header Section with Back Arrow -->
     <header class="header">
+        <div class="back-arrow">
+            <!-- Back Arrow Link -->
+            <a href="{% url 'admin-dashboard' %}"> <!-- Cambia 'nightclub-list' al nombre correcto de la vista para regresar -->
+                <img src="{% static 'images/back-arrow.png' %}" alt="Back" class="back-icon">
+            </a>
+        </div>
         <div class="logo-section">
             <img src="{% static 'images/logo.png' %}" alt="Logo" class="logo">
             <h1>Edit {{ nightclub.name }}</h1>
         </div>
     </header>
 
-    <div class="register-container">
-        <form method="POST" enctype="multipart/form-data">
+    <!-- Edit Form Container -->
+    <div class="edit-container">
+        <form method="POST" enctype="multipart/form-data" class="edit-form">
             {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit" class="auth-button red-button">Save Changes</button>
+
+            <div class="form-group">
+                {{ form.name.label_tag }}
+                {{ form.name }}
+            </div>
+
+            <div class="form-group">
+                {{ form.address.label_tag }}
+                {{ form.address }}
+            </div>
+
+            <div class="form-group">
+                {{ form.description.label_tag }}
+                {{ form.description }}
+            </div>
+
+            <div class="form-group">
+                {{ form.image.label_tag }}
+                {{ form.image }}
+            </div>
+
+            <!-- Latitude and Longitude Fields -->
+            <div class="form-group coordinates">
+                <label for="latitude">Latitude:</label>
+                {{ form.latitude }}
+            </div>
+
+            <div class="form-group coordinates">
+                <label for="longitude">Longitude:</label>
+                {{ form.longitude }}
+            </div>
+
+            <button type="submit" class="save-button">Save Changes</button>
         </form>
     </div>
+
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #000117;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            margin: 0;
+        }
+
+        .header {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding: 15px 0;
+            color: #F60800;
+        }
+
+        /* Back Arrow Positioning */
+        .back-arrow {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .back-arrow img {
+            width: 25px;
+            height: 25px;
+        }
+
+        .edit-container {
+            width: 100%;
+            max-width: 600px;
+            background-color: #1c1c1c;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .edit-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .form-group label {
+            font-size: 16px;
+            color: #bbb;
+        }
+
+        /* Input Fields */
+        .form-group input[type="text"],
+        .form-group input[type="file"],
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #333;
+            color: #fff;
+            font-size: 16px;
+        }
+
+        /* Coordinates Specific Styles */
+        .coordinates {
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Save Button */
+        .save-button {
+            background-color: #F60800;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .save-button:hover {
+            background-color: #6B3FA0;
+        }
+    </style>
 
 </body>
 </html>

@@ -4,7 +4,7 @@ from tickets.models import NightClub, Ticket
 class NightClubForm(forms.ModelForm):
     class Meta:
         model = NightClub
-        fields = ['name', 'address', 'description', 'image']  # Adjust fields as needed
+        fields = ['name', 'address', 'description', 'image', 'latitude', 'longitude']
 
 class TicketForm(forms.ModelForm):
     class Meta:
