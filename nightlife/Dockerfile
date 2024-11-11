@@ -19,5 +19,5 @@ RUN python manage.py collectstatic --noinput
 RUN python manage.py migrate
 
 # Expose the port and run the application
-EXPOSE 8000
-CMD ["gunicorn", "--bind", "0.0.0.0:8000", "nightlife.wsgi:application"]
+EXPOSE 8080
+CMD ["gunicorn", "--bind", "0.0.0.0:8080", "nightlife.wsgi:application"]
