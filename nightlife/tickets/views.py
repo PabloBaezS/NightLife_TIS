@@ -1,31 +1,30 @@
 from django.conf import settings
-
-from .models import Ticket, CartItem, Order, Payment
-from django.contrib.admin.views.decorators import staff_member_required
-from .forms import NightClubForm
+from django.utils import translation  # Para la gestión de idiomas
+from django.utils.translation import gettext as _  # Para usar traducción en Python
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Ticket, NightClub
-from .forms import TicketForm
-from users.models import UserProfile
-from rest_framework import viewsets
-from .models import NightClub
-from .serializers import NightClubSerializer
-import json
 from django.http import JsonResponse, HttpResponse
-from django.shortcuts import get_object_or_404
-from .models import NightClub
-from .serializers import NightClubSerializer
 from django.contrib.auth.decorators import login_required
-from .models import CartItem
+from django.contrib.admin.views.decorators import staff_member_required
+from rest_framework import viewsets
+from .models import Ticket, NightClub, CartItem, Order, Payment
+from .forms import NightClubForm, TicketForm
+from .serializers import NightClubSerializer
+from django.http import FileResponse
+from .utils import generate_pdf_receipt
+from .payment_processors import CreditCardPaymentProcessor, AccountBalancePaymentProcessor
 
+import json
+
+# Helper function para activar idioma en cada vista según la sesión
+def set_language_in_view(request):
+    language = request.session.get('django_language', 'en')
+    translation.activate(language)
 
 def TicketListView(request, nightclub_id):
-    try:
-        nightclub = get_object_or_404(NightClub, pk=nightclub_id)  # Obtiene la discoteca actual
-        tickets = Ticket.objects.filter(nightclub=nightclub)  # Filtra los tickets para esa discoteca
-        google_maps_api_key = settings.GOOGLE_MAPS_API_KEY
-    except NightClub.DoesNotExist:
-        return HttpResponse("NightClub no encontrado.", status=404)
+    set_language_in_view(request)  # Activa idioma según sesión
+    nightclub = get_object_or_404(NightClub, pk=nightclub_id)
+    tickets = Ticket.objects.filter(nightclub=nightclub)
+    google_maps_api_key = settings.GOOGLE_MAPS_API_KEY
 
     return render(request, 'tickets/ticket_list.html', {
         'nightclub': nightclub,
@@ -34,22 +33,22 @@ def TicketListView(request, nightclub_id):
     })
 
 
-@login_required(login_url='login')  # Redirige al login si el usuario no está autenticado
+@login_required(login_url='login')
 def TicketDetailView(request, pk):
+    set_language_in_view(request)  # Activa idioma según sesión
     ticket = get_object_or_404(Ticket, pk=pk)
 
     if request.method == 'POST':
-        # Añadir ticket al carrito
         quantity = int(request.POST.get('quantity', 1))
         CartItem.objects.create(ticket=ticket, user=request.user, quantity=quantity)
-        return redirect('cart')  # Redirige a la página del carrito
+        return redirect('cart')
 
     return render(request, 'tickets/ticket_detail.html', {'ticket': ticket})
 
 
-
 @login_required
 def cart_view(request):
+    set_language_in_view(request)  # Activa idioma según sesión
     cart_items = CartItem.objects.filter(user=request.user)
     total_price = sum([item.ticket.price * item.quantity for item in cart_items])
 
@@ -59,22 +58,21 @@ def cart_view(request):
     })
 
 
-def order_confirmation(request):
+def order_confirmation(request, order_id):
+    order = get_object_or_404(Order, id=order_id)
     cart_items = CartItem.objects.filter(user=request.user)
-    #order = Order.objects.create(user=request.user)
-    #order.tickets.set(cart_items)
-    #order.save()
-    return render(request, 'tickets/order_confirmation.html')
+    return render(request, 'tickets/order_confirmation.html', {'order': order})
 
 
 def home_view(request):
+    set_language_in_view(request)  # Activa idioma según sesión
     nightclubs = NightClub.objects.all()
-    # print("Nightclub IDs:", [nightclub.id for nightclub in nightclubs])  # debug
     return render(request, 'tickets/home.html', {'nightclubs': nightclubs})
 
 
 @staff_member_required
 def create_nightclub_view(request):
+    set_language_in_view(request)  # Activa idioma según sesión
     if request.method == 'POST':
         form = NightClubForm(request.POST, request.FILES)
         ticket_formset = TicketForm(request.POST)
@@ -82,13 +80,12 @@ def create_nightclub_view(request):
         if form.is_valid() and ticket_formset.is_valid():
             nightclub = form.save()
 
-            # Save ticket information
             for form in ticket_formset:
                 ticket = form.save(commit=False)
                 ticket.nightclub = nightclub
                 ticket.save()
 
-            return redirect('admin-dashboard')  # Redirect to the admin dashboard
+            return redirect('admin-dashboard')
     else:
         form = NightClubForm()
         ticket_formset = TicketForm()
@@ -99,107 +96,105 @@ def create_nightclub_view(request):
     })
 
 
-
 @staff_member_required
 def delete_ticket(request, pk):
+    set_language_in_view(request)  # Activa idioma según sesión
     ticket = get_object_or_404(Ticket, pk=pk)
-    nightclub_id = ticket.nightclub.pk  # Save the nightclub ID before deletion
+    nightclub_id = ticket.nightclub.pk
     ticket.delete()
-    return redirect('nightclub-detail', pk=nightclub_id)  # Redirect to the same nightclub's detail page
+    return redirect('nightclub-detail', pk=nightclub_id)
 
 
 def add_ticket(request, nightclub_id):
-    nightclub = get_object_or_404(NightClub, pk=nightclub_id)  # Get the specific nightclub
+    set_language_in_view(request)  # Activa idioma según sesión
+    nightclub = get_object_or_404(NightClub, pk=nightclub_id)
 
     if request.method == 'POST':
         form = TicketForm(request.POST)
         if form.is_valid():
             ticket = form.save(commit=False)
-            ticket.nightclub = nightclub  # Assign the nightclub to the ticket
+            ticket.nightclub = nightclub
             ticket.save()
-            return redirect('nightclub-detail', pk=nightclub_id)  # Redirect back to nightclub detail
+            return redirect('nightclub-detail', pk=nightclub_id)
     else:
         form = TicketForm()
 
     return render(request, 'tickets/add_ticket.html', {'form': form, 'nightclub': nightclub})
 
 
-from django.shortcuts import render, redirect
-from .models import Order
-
 def payment_view(request):
+    set_language_in_view(request)
+    cart_items = CartItem.objects.filter(user=request.user)
+    total_price = sum(item.ticket.price * item.quantity for item in cart_items)
+
     if request.method == "POST":
-        # Retrieve all cart items for the current user
-        cart_items = CartItem.objects.filter(user=request.user)
+        order = Order.objects.create(user=request.user, total_price=total_price)
+        payment_method = request.POST.get('payment_method')
 
-        # Calculate the total price
-        #total_price = sum([item.ticket.price * item.quantity for item in cart_items])
+        if payment_method == 'credit_card':
+            processor = CreditCardPaymentProcessor()
+            processor.process_payment(request.user, order, total_price, card_number=request.POST.get('card_number'))
+        elif payment_method == 'account_balance':
+            processor = AccountBalancePaymentProcessor()
+            processor.process_payment(request.user, order, total_price)
 
-        # Create the order
-        #order = Order.objects.create(user=request.user)
+        cart_items.delete()
+        # Redirect with the order ID as a parameter
+        return redirect('order-confirmation', order_id=order.id)
+
+    return render(request, 'tickets/payment.html', {'total_price': total_price})
 
 
-        # Optionally, clear the cart after creating the order
-        #cart_items.delete()
 
-        # Redirect to the order confirmation page
-        return redirect('order-confirmation')
-
-    return render(request, 'tickets/payment.html')
 
 def payment_success_view(request):
+    set_language_in_view(request)  # Activar idioma según sesión
     return render(request, 'payment_success.html')
 
 
-from django.shortcuts import redirect, get_object_or_404
-from .models import CartItem
-from tickets.models import Ticket
-
+@login_required
 def add_to_cart(request, ticket_id):
+    set_language_in_view(request)  # Activa idioma según sesión
     ticket = get_object_or_404(Ticket, id=ticket_id)
     user = request.user
 
     if request.method == 'POST':
         quantity = request.POST.get('quantity', 1)
-        # Get or create the cart item for this user and ticket
         cart_item, created = CartItem.objects.get_or_create(user=user, ticket=ticket)
-        cart_item.quantity = quantity  # Update quantity
-        cart_item.save()  # Save the updated cart item
-
+        cart_item.quantity = quantity
+        cart_item.save()
         return redirect('cart')
+
 
 @login_required
 def remove_cart_item(request, item_id):
+    set_language_in_view(request)  # Activa idioma según sesión
     cart_item = get_object_or_404(CartItem, id=item_id, user=request.user)
     cart_item.delete()
     return redirect('cart')
 
 
 class NightClubViewSet(viewsets.ReadOnlyModelViewSet):
-    """
-    Un ViewSet para ver una lista de discotecas o detalles de una en particular.
-    """
     queryset = NightClub.objects.all()
     serializer_class = NightClubSerializer
 
 
 def download_nightclub_json(request, pk):
-    # Obtén el club nocturno específico
+    set_language_in_view(request)  # Activa idioma según sesión
     nightclub = get_object_or_404(NightClub, pk=pk)
-
-    # Serializa los datos del club nocturno
     serializer = NightClubSerializer(nightclub)
     data = serializer.data
 
-    # Crea la respuesta en formato JSON
     response = HttpResponse(
         json.dumps(data, indent=4),
-        # Convierte a JSON con indentación para mejorar la visualización
         content_type='application/json'
     )
-
-    # Configura el encabezado para forzar la descarga con un nombre de archivo
-    response[
-        'Content-Disposition'] = f'attachment; filename="{nightclub.name}_details.json"'
+    response['Content-Disposition'] = f'attachment; filename="{nightclub.name}_details.json"'
     return response
 
+# tickets/views.py
+
+
+def download_receipt(request, order_id):
+    buffer = generate_pdf_receipt(order_id)
+    return FileResponse(buffer, as_attachment=True, filename=f"Receipt_Order_{order_id}.pdf")

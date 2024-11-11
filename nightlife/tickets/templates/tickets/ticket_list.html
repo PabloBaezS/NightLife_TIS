@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ LANGUAGE_CODE }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NightLife - Explore Nightclubs</title>
     {% load static %}
+    {% load i18n %}
+    <title>{% trans "NightLife - Explore Nightclubs" %}</title>
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
 <body class="homepage">
@@ -12,17 +13,26 @@
 <!-- Header Section -->
 <header class="header">
     <div class="logo-section">
-        <img src="{% static 'images/logo.png' %}" alt="NightLife Logo" class="logo">
-        <h1>NightLife</h1>
+        <img src="{% static 'images/logo.png' %}" alt="{% trans 'NightLife Logo' %}" class="logo">
+        <h1>{% trans "NightLife" %}</h1>
     </div>
     <div class="header-icons">
+        <!-- Language Switcher -->
+        <form action="{% url 'set_language' %}" method="post" class="language-switcher">
+            {% csrf_token %}
+            <select name="language" onchange="this.form.submit()">
+                <option value="en" {% if LANGUAGE_CODE == 'en' %}selected{% endif %}>{% trans "English" %}</option>
+                <option value="es" {% if LANGUAGE_CODE == 'es' %}selected{% endif %}>{% trans "Español" %}</option>
+            </select>
+        </form>
+
         {% if user.is_authenticated %}
             <a href="{% url 'profile' %}" class="profile-icon">
-                <img src="{% static 'images/profile-icon.png' %}" alt="Profile Icon">
+                <img src="{% static 'images/profile-icon.png' %}" alt="{% trans 'Profile Icon' %}">
             </a>
         {% else %}
-            <a href="{% url 'register' %}" class="auth-button red-button">Sign Up</a>
-            <a href="{% url 'login' %}" class="auth-button red-button">Login</a>
+            <a href="{% url 'register' %}" class="auth-button red-button">{% trans "Sign Up" %}</a>
+            <a href="{% url 'login' %}" class="auth-button red-button">{% trans "Login" %}</a>
         {% endif %}
     </div>
 </header>
@@ -31,22 +41,22 @@
 <section class="search-section">
     <div class="search-bar">
         <span class="search-icon">
-            <img src="{% static 'images/search-icon.png' %}" alt="Search Icon">
+            <img src="{% static 'images/search-icon.png' %}" alt="{% trans 'Search Icon' %}">
         </span>
-        <input type="text" placeholder="¿Dónde es la fiesta?" name="search" class="search-input">
+        <input type="text" placeholder="{% trans 'Where is the party?' %}" name="search" class="search-input">
     </div>
 </section>
 
 <section class="nightclub-list">
-    <h2>Available Tickets for {{ nightclub.name }}</h2> <!-- Nombre de la discoteca -->
+    <h2>{% trans "Available Tickets for" %} {{ nightclub.name }}</h2> <!-- Nombre de la discoteca -->
 
     <!-- Sección de Información de la Discoteca -->
     <div class="nightclub-info-section">
         <p>{{ nightclub.description }}</p> <!-- Descripción de la discoteca -->
         <!-- Ícono para descargar información en JSON -->
         <a href="{% url 'download-nightclub-json' nightclub.id %}" class="info-icon">
-            <img src="{% static 'images/info.png' %}" alt="Descargar JSON" title="Descargar Información JSON">
-            Descargar Información JSON
+            <img src="{% static 'images/info.png' %}" alt="{% trans 'Download JSON' %}" title="{% trans 'Download JSON Information' %}">
+            {% trans "Download JSON Information" %}
         </a>
     </div>
 
@@ -54,39 +64,35 @@
     <div class="nightclubs">
         {% for ticket in tickets %}
         <div class="ticket-card">
-        <h3>{{ ticket.ticket_type }}</h3>
-        <p>Precio: ${{ ticket.price }}</p>
-        <a href="{% url 'ticket-detail' ticket.id %}">Ver detalles</a> <!-- Enlace al detalle del ticket -->
-    </div>
+            <h3>{{ ticket.ticket_type }}</h3>
+            <p>{% trans "Price" %}: ${{ ticket.price }}</p>
+            <a href="{% url 'ticket-detail' ticket.id %}">{% trans "View Details" %}</a> <!-- Enlace al detalle del ticket -->
+        </div>
         {% endfor %}
     </div>
 </section>
 
 <!-- Mapa de Google al final de la página -->
 <section class="map-section">
-    <h2>Location of {{ nightclub.name }}</h2>
+    <h2>{% trans "Location of" %} {{ nightclub.name }}</h2>
     <div id="map" style="height: 400px; width: 100%;"></div>
 </section>
 
 <!-- Cargar el script de la API de Google Maps -->
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCg3kfOFObUBkngC-llaIe5oh7zD5gc1qE&callback=initMap"></script>
 
-
 <script>
     function initMap() {
-        // Coordenadas de la discoteca
         const nightclubLocation = {
             lat: parseFloat({{ nightclub.latitude }}),
             lng: parseFloat({{ nightclub.longitude }})
         };
 
-        // Crear el mapa centrado en la discoteca
         const map = new google.maps.Map(document.getElementById("map"), {
             zoom: 15,
             center: nightclubLocation,
         });
 
-        // Crear un marcador en la ubicación de la discoteca
         new google.maps.Marker({
             position: nightclubLocation,
             map: map,
@@ -96,6 +102,50 @@
 </script>
 
 <style>
+/* Language Switcher Styles */
+.language-switcher {
+    position: absolute;
+    top: 15px;
+    right: 100px;
+    color: #fff;
+    background: #333;
+    border-radius: 5px;
+    padding: 5px;
+    font-size: 14px;
+    border: 1px solid #666;
+}
+
+.language-switcher select {
+    background: none;
+    border: none;
+    color: #fff;
+}
+
+.language-switcher select:focus {
+    outline: none;
+}
+
+/* Info Icon Styles */
+.info-icon {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: #F60800;
+    font-size: 14px;
+    text-decoration: none;
+}
+
+.info-icon img {
+    width: 16px;
+    height: 16px;
+    vertical-align: middle;
+}
+
+.info-icon:hover {
+    color: #6B3FA0;
+}
+
+/* Additional Styles */
 .nightclub-info-section {
     display: flex;
     align-items: center;
@@ -106,53 +156,12 @@
     margin-bottom: 20px;
 }
 
-.nightclub-info-section p {
-    color: #ccc;
-    margin: 0;
-    font-size: 16px;
-    flex-grow: 1;
-}
-
-.info-icon {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    color: #F60800;
-    text-decoration: none;
-    font-size: 16px;
-}
-
-.info-icon img {
-    height: 20px;
-    width: 20px;
-}
-
-.info-icon:hover {
-    color: #6B3FA0;
-}
-
 .ticket-card {
     background-color: #1c1c1c;
     padding: 15px;
     border-radius: 10px;
     margin-bottom: 15px;
     transition: box-shadow 0.3s ease;
-}
-
-.ticket-card-link {
-    text-decoration: none;
-    color: inherit;
-    display: flex;
-}
-
-.ticket-info h3 {
-    font-size: 18px;
-    color: white;
-}
-
-.ticket-price {
-    font-size: 16px;
-    color: #bbb;
 }
 
 .ticket-card:hover {

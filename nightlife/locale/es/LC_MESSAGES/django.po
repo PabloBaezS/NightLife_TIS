@@ -1,0 +1,96 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-11-11 16:11-0500\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: tickets/templates/tickets/home.html:8
+#: tickets/templates/tickets/ticket_list.html:8
+msgid "NightLife - Explore Nightclubs"
+msgstr "NightLife - Explora Discotecas"
+
+#: tickets/templates/tickets/home.html:16
+#: tickets/templates/tickets/ticket_list.html:17
+msgid "NightLife Logo"
+msgstr "Logo de NightLife"
+
+#: tickets/templates/tickets/home.html:17
+#: tickets/templates/tickets/ticket_list.html:18
+msgid "NightLife"
+msgstr "NightLife"
+
+#: tickets/templates/tickets/home.html:24
+#: tickets/templates/tickets/ticket_list.html:32
+msgid "Profile Icon"
+msgstr "Icono de Perfil"
+
+#: tickets/templates/tickets/home.html:27
+#: tickets/templates/tickets/ticket_list.html:35
+msgid "Sign Up"
+msgstr "Registrarse"
+
+#: tickets/templates/tickets/home.html:28
+#: tickets/templates/tickets/ticket_list.html:36
+msgid "Login"
+msgstr "Iniciar Sesión"
+
+#: tickets/templates/tickets/home.html:47
+#: tickets/templates/tickets/ticket_list.html:45
+msgid "Search Icon"
+msgstr "Icono de Búsqueda"
+
+#: tickets/templates/tickets/home.html:49
+#: tickets/templates/tickets/ticket_list.html:47
+msgid "Where is the party?"
+msgstr "¿Dónde es la fiesta?"
+
+#: tickets/templates/tickets/home.html:54
+msgid "Nightclubs"
+msgstr "Discotecas"
+
+#: tickets/templates/tickets/ticket_list.html:25
+msgid "English"
+msgstr "Inglés"
+
+#: tickets/templates/tickets/ticket_list.html:26
+msgid "Español"
+msgstr "Español"
+
+#: tickets/templates/tickets/ticket_list.html:52
+msgid "Available Tickets for"
+msgstr "Entradas Disponibles para"
+
+#: tickets/templates/tickets/ticket_list.html:59
+msgid "Download JSON"
+msgstr "Descargar JSON"
+
+#: tickets/templates/tickets/ticket_list.html:59
+#: tickets/templates/tickets/ticket_list.html:60
+msgid "Download JSON Information"
+msgstr "Descargar Información JSON"
+
+#: tickets/templates/tickets/ticket_list.html:69
+msgid "Price"
+msgstr "Precio"
+
+#: tickets/templates/tickets/ticket_list.html:70
+msgid "View Details"
+msgstr "Ver Detalles"
+
+#: tickets/templates/tickets/ticket_list.html:78
+msgid "Location of"
+msgstr "Ubicación de"

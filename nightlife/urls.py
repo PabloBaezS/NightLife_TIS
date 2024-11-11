@@ -1,37 +1,27 @@
-"""
-URL configuration for nightlife project.
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/4.2/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
-
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
+from django.conf.urls.i18n import i18n_patterns
 
-urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', include('tickets.urls')),  # Home and tickets
-    path('users/', include('users.urls')),  # User-related URLs, including profile
-    path('admin/', admin.site.urls),  # Django's built-in admin
-    path('users/', include('users.urls')),
-    # Custom admin views are under 'users/'
-    path('api/', include('tickets.urls')),  # Ruta para la API de nightclubs
+# Configuración de rutas principales con prefijo de idioma
+urlpatterns = i18n_patterns(
+    path('admin/', admin.site.urls),              # Administración de Django
+    path('', include('tickets.urls')),             # URLs de la aplicación de tickets
+    path('users/', include('users.urls')),         # URLs relacionadas con los usuarios
+)
 
+# Incluye las URLs para cambiar de idioma, fuera del prefijo de idioma
+urlpatterns += [
+    path('i18n/', include('django.conf.urls.i18n')),  # URL para el cambio de idioma
 ]
 
+# Incluye rutas de API específicas (opcional)
+# Si tienes vistas de API específicas en `tickets.urls`, añade aquí solo las necesarias o agrégalas a su propio archivo de URLs
+urlpatterns += [
+    path('api/', include('tickets.urls')),  # Rutas de API para la aplicación de tickets, si son necesarias
+]
 
+# Configuración para archivos estáticos y media en modo DEBUG
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-

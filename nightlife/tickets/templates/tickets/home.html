@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ LANGUAGE_CODE }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NightLife - Explore Nightclubs</title>
     {% load static %}
+    {% load i18n %}
+    <title>{% trans "NightLife - Explore Nightclubs" %}</title>
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
 <body class="homepage">
@@ -12,18 +13,31 @@
 <!-- Header Section -->
 <header class="header">
     <div class="logo-section">
-        <img src="{% static 'images/logo.png' %}" alt="NightLife Logo" class="logo">
-        <h1>NightLife</h1>
+        <a href="{% url 'home' %}" class="logo-link">
+            <img src="{% static 'images/logo.png' %}" alt="{% trans 'NightLife Logo' %}" class="logo">
+            <h1>{% trans "NightLife" %}</h1>
+        </a>
     </div>
+
+    <!-- Profile and Language Switcher -->
     <div class="header-icons">
         {% if user.is_authenticated %}
             <a href="{% url 'profile' %}" class="profile-icon">
-                <img src="{% static 'images/profile-icon.png' %}" alt="Profile Icon">
+                <img src="{% static 'images/profile-icon.png' %}" alt="{% trans 'Profile Icon' %}">
             </a>
         {% else %}
-            <a href="{% url 'register' %}" class="auth-button red-button">Sign Up</a>
-            <a href="{% url 'login' %}" class="auth-button red-button">Login</a>
+            <a href="{% url 'register' %}" class="auth-button red-button">{% trans "Sign Up" %}</a>
+            <a href="{% url 'login' %}" class="auth-button red-button">{% trans "Login" %}</a>
         {% endif %}
+
+        <!-- Language Switcher -->
+        <form action="{% url 'set_language' %}" method="post" class="language-switcher">
+            {% csrf_token %}
+            <select name="language" onchange="this.form.submit()">
+                <option value="en" {% if LANGUAGE_CODE == 'en' %}selected{% endif %}>{% trans "English" %}</option>
+                <option value="es" {% if LANGUAGE_CODE == 'es' %}selected{% endif %}>{% trans "Español" %}</option>
+            </select>
+        </form>
     </div>
 </header>
 
@@ -31,24 +45,22 @@
 <section class="search-section">
     <div class="search-bar">
         <span class="search-icon">
-            <img src="{% static 'images/search-icon.png' %}" alt="Search Icon">
+            <img src="{% static 'images/search-icon.png' %}" alt="{% trans 'Search Icon' %}">
         </span>
-        <input type="text" placeholder="¿Dónde es la fiesta?" name="search" class="search-input">
+        <input type="text" placeholder="{% trans 'Where is the party?' %}" name="search" class="search-input">
     </div>
 </section>
 
 <section class="nightclub-list">
-    <h2>Discotecas:</h2>
+    <h2>{% trans "Nightclubs" %}:</h2>
     <div class="nightclubs">
         {% for nightclub in nightclubs %}
         <div class="nightclub-card">
-            <!-- Enlace a la lista de tickets para la discoteca específica -->
             <a href="{% url 'ticket-list' nightclub.id %}" class="nightclub-card-link">
                 <img src="{{ nightclub.image.url }}" alt="{{ nightclub.name }}" class="nightclub-img">
                 <div class="nightclub-info">
                     <h3 class="nightclub-name">{{ nightclub.name }}</h3>
                 </div>
-                <!-- Flecha para acceder al detalle de la discoteca -->
                 <span class="arrow-icon">&#10145;</span>
             </a>
         </div>
@@ -56,8 +68,65 @@
     </div>
 </section>
 
-
 <style>
+/* Header and Language Switcher Styles */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    background-color: #000117;
+}
+
+.logo-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    flex-grow: 1;
+}
+
+.logo-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: inherit;
+}
+
+.logo {
+    height: 40px;
+    margin-right: 10px;
+}
+
+.header h1 {
+    font-size: 24px;
+    color: #fff;
+}
+
+.header-icons {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.language-switcher {
+    margin-left: 10px;
+}
+
+.language-switcher select {
+    background-color: #1c1c1c;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.language-switcher select:hover {
+    background-color: #F60800;
+}
+
 .nightclub-card {
     display: flex;
     align-items: center;
@@ -75,18 +144,12 @@
     color: inherit;
     display: flex;
     align-items: center;
-    flex-grow: 1; /* Permite que el enlace ocupe todo el espacio posible */
+    flex-grow: 1;
 }
 
 .nightclub-name {
-    font-size: 20px; /* Aumenta el tamaño de la fuente */
+    font-size: 20px;
     color: white;
-}
-
-.info-icon img {
-    height: 20px;
-    width: 20px;
-    margin-right: 15px; /* Ajusta el espaciado entre el ícono de info y la flecha */
 }
 
 .arrow-icon {
@@ -98,15 +161,9 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
-.arrow-icon:hover, .info-icon:hover img {
+.arrow-icon:hover {
     color: #6B3FA0;
     cursor: pointer;
-}
-
-.icon-group {
-    display: flex;
-    align-items: center;
-    gap: 50px; /* Espacio entre el ícono de información y la flecha */
 }
 </style>
 

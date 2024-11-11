@@ -68,12 +68,13 @@
         <h1>Order Confirmation</h1>
     </header>
 
-    <section>
-        <p>Thank you for your order!</p>
-        <p>Your order ID is: <strong>{{ order.order_id }}</strong></p>
-        <p>We have saved your order. You can view it in your profile anytime.</p>
-        <a href="{% url 'home' %}" class="home-btn">Go to Homepage</a> <!-- Redirect to homepage button -->
-    </section>
+    <!-- order_confirmation.html -->
+<section>
+    <p>Thank you for your order!</p>
+    <p>Your order ID is: <strong>{{ order.order_id }}</strong></p>
+    <p>You can download your receipt below:</p>
+    <a href="{% url 'download-receipt' order.id %}" class="home-btn">Download Receipt</a>
+</section>
 
 </body>
 </html>

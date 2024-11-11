@@ -87,23 +87,32 @@
 <body>
 
     <form method="POST" action="{% url 'payment' %}">
-        {% csrf_token %}
-        <div class="payment-summary">
-            <h2>Order Summary</h2>
-            <p><strong>Total Price:</strong> ${{ total_price }}</p>
-            <!-- Hidden field to send the total_price value -->
-            <input type="hidden" name="total_price" value="{{ total_price }}">
+    {% csrf_token %}
+    <div class="payment-summary">
+        <h2>Order Summary</h2>
+        <p><strong>Total Price:</strong> ${{ total_price }}</p>
+        <input type="hidden" name="total_price" value="{{ total_price }}">
+    </div>
+
+    <div class="payment-options">
+        <label>
+            <input type="radio" name="payment_method" value="credit_card" required>
+            Credit Card
+        </label>
+        <div id="credit-card-fields">
+            <input type="text" name="card_number" placeholder="Card Number">
+            <!-- Add other card details as needed -->
         </div>
 
-        <div class="payment-options">
-            <!-- Payment fields (e.g., credit card details) -->
-            <input type="text" name="card_number" placeholder="Card Number" required>
-            <input type="text" name="card_expiry" placeholder="Expiry Date (MM/YY)" required>
-            <input type="text" name="card_cvc" placeholder="CVC" required>
-        </div>
+        <label>
+            <input type="radio" name="payment_method" value="account_balance" required>
+            Account Balance
+        </label>
+    </div>
 
-        <button type="submit" class="button button--checkout">Submit Payment</button>
-    </form>
+    <button type="submit" class="button button--checkout">Submit Payment</button>
+</form>
+
 
 </body>
 </html>
