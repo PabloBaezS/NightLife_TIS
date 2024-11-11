@@ -140,3 +140,5 @@ REST_FRAMEWORK = {
         'rest_framework.renderers.JSONRenderer',  # Solo JSON
     ],
 }
+
+GOOGLE_MAPS_API_KEY = os.getenv('GOOGLE_MAPS_API_KEY', 'YOUR_API_KEY')
