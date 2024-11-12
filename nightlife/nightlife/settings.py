@@ -20,11 +20,17 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-%8f^t)e=wuiz--=%+v26-yjm-=!g3z+%a=^+fts^^e+s(x5_c+'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['*',  'https://nightlife-44569583944.us-central1.run.app',
-    'https://nightlife.freesite.online']
+ALLOWED_HOSTS = [
+    'nightlife-44569583944.us-central1.run.app',
+    'nightlife.freesite.online',
+]
 
+CSRF_TRUSTED_ORIGINS = [
+    'https://nightlife-44569583944.us-central1.run.app',
+    'https://nightlife.freesite.online',
+]
 
 # Application definition
 
@@ -140,7 +146,5 @@ GOOGLE_MAPS_API_KEY = os.getenv('GOOGLE_MAPS_API_KEY', 'YOUR_API_KEY')
 LANGUAGE_COOKIE_NAME = 'django_language'
 LANGUAGE_COOKIE_HTTPONLY = True
 
-CSRF_TRUSTED_ORIGINS = [
-    'https://nightlife-44569583944.us-central1.run.app',
-    'https://nightlife.freesite.online'
-]
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
