@@ -31,25 +31,27 @@
         {% endif %}
 
         <!-- Language Switcher -->
-        <form action="{% url 'set_language' %}" method="post" class="language-switcher">
-            {% csrf_token %}
-            <select name="language" onchange="this.form.submit()">
-                <option value="en" {% if LANGUAGE_CODE == 'en' %}selected{% endif %}>{% trans "English" %}</option>
-                <option value="es" {% if LANGUAGE_CODE == 'es' %}selected{% endif %}>{% trans "Español" %}</option>
-            </select>
-        </form>
+       <form action="{% url 'set_language' %}" method="post" class="language-switcher">
+    {% csrf_token %}
+    <select name="language" onchange="this.form.submit()">
+        <option value="en" {% if LANGUAGE_CODE == 'en' %}selected{% endif %}>{% trans "English" %}</option>
+        <option value="es" {% if LANGUAGE_CODE == 'es' %}selected{% endif %}>{% trans "Español" %}</option>
+    </select>
+</form>
+
     </div>
 </header>
 
 <!-- Search Bar -->
 <section class="search-section">
-    <div class="search-bar">
+    <form action="{% url 'home' %}" method="get" class="search-bar">
         <span class="search-icon">
             <img src="{% static 'images/search-icon.png' %}" alt="{% trans 'Search Icon' %}">
         </span>
-        <input type="text" placeholder="{% trans 'Where is the party?' %}" name="search" class="search-input">
-    </div>
+        <input type="text" name="search" placeholder="{% trans 'Where is the party?' %}" value="{{ request.GET.search }}" class="search-input">
+    </form>
 </section>
+
 
 <section class="nightclub-list">
     <h2>{% trans "Nightclubs" %}:</h2>
@@ -69,21 +71,34 @@
 </section>
 
 <style>
-/* Header and Language Switcher Styles */
+/* General Page and Header Styles */
+body.homepage {
+    background-color: #0d0d1e;
+    color: #ffffff;
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
 .header {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     padding: 15px 30px;
+    width: 100%;
+    max-width: 1200px;
     background-color: #000117;
+    position: relative;
 }
 
 .logo-section {
     display: flex;
     align-items: center;
-    justify-content: center;
     text-align: center;
     flex-grow: 1;
+    justify-content: center;
 }
 
 .logo-link {
@@ -94,47 +109,93 @@
 }
 
 .logo {
-    height: 40px;
+    height: 50px;
     margin-right: 10px;
 }
 
 .header h1 {
-    font-size: 24px;
-    color: #fff;
+    font-size: 32px;
+    color: #FF5A5F;
 }
 
 .header-icons {
     display: flex;
     align-items: center;
     gap: 15px;
+    position: absolute;
+    right: 30px;
 }
 
+/* Language Switcher Styles */
 .language-switcher {
-    margin-left: 10px;
+    background-color: #333;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: none;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s;
 }
 
 .language-switcher select {
-    background-color: #1c1c1c;
-    color: white;
+    background-color: #333;
+    color: #fff;
     border: none;
-    padding: 5px 10px;
-    border-radius: 5px;
-    font-size: 14px;
-    cursor: pointer;
 }
 
 .language-switcher select:hover {
-    background-color: #F60800;
+    background-color: #FF5A5F;
+}
+
+/* Search Bar Styles */
+.search-section {
+    margin-top: 20px;
+    width: 100%;
+    max-width: 600px;
+}
+
+.search-bar {
+    display: flex;
+    align-items: center;
+    background-color: #1c1c2e;
+    border-radius: 8px;
+    padding: 10px;
+}
+
+.search-icon img {
+    width: 24px;
+    height: 24px;
+    margin-right: 10px;
+}
+
+.search-input {
+    width: 100%;
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 18px;
+}
+
+.search-input::placeholder {
+    color: #bbb;
+}
+
+/* Nightclub Cards Styles */
+.nightclub-list {
+    width: 100%;
+    max-width: 800px;
+    margin-top: 30px;
+    text-align: center;
 }
 
 .nightclub-card {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    position: relative;
-    padding: 15px;
+    padding: 20px;
     border-radius: 10px;
-    background-color: #1c1c1c;
+    background-color: #1c1c2e;
     margin-bottom: 15px;
     transition: box-shadow 0.3s ease;
 }
@@ -144,16 +205,27 @@
     color: inherit;
     display: flex;
     align-items: center;
+    width: 100%;
+}
+
+.nightclub-img {
+    width: 60px;
+    height: 60px;
+    border-radius: 5px;
+    margin-right: 15px;
+}
+
+.nightclub-info {
     flex-grow: 1;
 }
 
 .nightclub-name {
     font-size: 20px;
-    color: white;
+    color: #FF5A5F;
 }
 
 .arrow-icon {
-    color: #F60800;
+    color: #FF5A5F;
     font-size: 24px;
 }
 

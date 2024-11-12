@@ -1,5 +1,4 @@
 from django.conf import settings
-from django.utils import translation  # Para la gestión de idiomas
 from django.utils.translation import gettext as _  # Para usar traducción en Python
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import JsonResponse, HttpResponse
@@ -12,13 +11,29 @@ from .serializers import NightClubSerializer
 from django.http import FileResponse
 from .utils import generate_pdf_receipt
 from .payment_processors import CreditCardPaymentProcessor, AccountBalancePaymentProcessor
-
+from django.utils import translation
 import json
+from django.shortcuts import redirect
 
-# Helper function para activar idioma en cada vista según la sesión
+
 def set_language_in_view(request):
-    language = request.session.get('django_language', 'en')
-    translation.activate(language)
+    if request.method == 'POST':
+        # Obtén el idioma seleccionado del formulario
+        language = request.POST.get('language', 'en')
+        # Activa el idioma seleccionado
+        translation.activate(language)
+        # Almacena el idioma en la sesión usando la clave 'django_language'
+        request.session['django_language'] = language
+        # Redirige a la página previa para aplicar el cambio de idioma
+        return redirect(request.META.get('HTTP_REFERER', '/'))
+    else:
+        # Usa el idioma almacenado en la sesión, o 'en' si no está definido
+        language = request.session.get('django_language', 'en')
+        translation.activate(language)
+        request.LANGUAGE_CODE = language
+        return redirect(request.META.get('HTTP_REFERER', '/'))
+
+
 
 def TicketListView(request, nightclub_id):
     set_language_in_view(request)  # Activa idioma según sesión
@@ -66,9 +81,17 @@ def order_confirmation(request, order_id):
 
 def home_view(request):
     set_language_in_view(request)  # Activa idioma según sesión
-    nightclubs = NightClub.objects.all()
-    return render(request, 'tickets/home.html', {'nightclubs': nightclubs})
+    search_query = request.GET.get('search', '')
 
+    if search_query:
+        nightclubs = NightClub.objects.filter(name__icontains=search_query)
+    else:
+        nightclubs = NightClub.objects.all()
+
+    return render(request, 'tickets/home.html', {
+        'nightclubs': nightclubs,
+        'search_query': search_query,
+    })
 
 @staff_member_required
 def create_nightclub_view(request):

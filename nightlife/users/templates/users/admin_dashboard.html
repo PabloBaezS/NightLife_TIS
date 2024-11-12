@@ -1,46 +1,148 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ LANGUAGE_CODE }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard</title>
     {% load static %}
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}">  <!-- Linking your CSS file -->
+    {% load i18n %}
+    <title>{% trans "Admin Dashboard" %}</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <style>
+        /* General body styling */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #0d0d1e;
+            color: #ffffff;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header .logo {
+            width: 50px;
+            vertical-align: middle;
+        }
+
+        .header h1 {
+            font-size: 32px;
+            color: #FF5A5F;
+            margin-top: 10px;
+        }
+
+        .nightclub-list {
+            max-width: 600px;
+            width: 100%;
+            background-color: #1c1c2e;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            text-align: center;
+        }
+
+        .nightclub-list h2 {
+            font-size: 28px;
+            color: #FF5A5F;
+            margin-bottom: 20px;
+        }
+
+        .auth-button {
+            background-color: #FF5A5F;
+            color: #ffffff;
+            padding: 10px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+            font-size: 14px;
+            margin: 5px;
+            display: inline-block;
+        }
+
+        .auth-button:hover {
+            background-color: #D53A4D;
+        }
+
+        .nightclubs {
+            list-style: none;
+            padding: 0;
+        }
+
+        .nightclub-card {
+            background-color: #2c2c3e;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .nightclub-card:hover {
+            transform: scale(1.02);
+        }
+
+        .nightclub-info h3 {
+            font-size: 20px;
+            color: #ffffff;
+            margin: 0;
+        }
+
+        .nightclub-info p {
+            font-size: 14px;
+            color: #cccccc;
+            margin: 5px 0 10px;
+        }
+
+        .nightclub-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .edit-delete-buttons a {
+            margin: 0;
+        }
+    </style>
 </head>
 <body>
 
-    <header class="header">
-        <div class="logo-section">
-            {% load static %}
-            <img src="{% static 'images/logo.png' %}" alt="Logo" class="logo">
-            <h1>Admin Dashboard</h1>
-        </div>
-    </header>
-
-    <div class="nightclub-list">
-        <h2>Nightclubs</h2>
-        <a href="{% url 'create-nightclub' %}" class="auth-button red-button">Create New Nightclub</a>
-
-        <ul class="nightclubs">
-            {% for nightclub in nightclubs %}
-            <li class="nightclub-card">
-                <div class="nightclub-info">
-                    <h3>{{ nightclub.name }}</h3>
-                    <p>{{ nightclub.address }}</p>
-                </div>
-                <div class="nightclub-actions">
-                    <!-- Details button (arrow) -->
-                    <a href="{% url 'nightclub-detail' nightclub.id %}" class="auth-button red-button">Tickets-Details</a>
-                    <!-- Edit/Delete buttons grouped together -->
-                    <div class="edit-delete-buttons">
-                        <a href="{% url 'edit-nightclub' nightclub.id %}" class="auth-button red-button">Edit</a>
-                        <a href="{% url 'delete-nightclub' nightclub.id %}" class="auth-button red-button">Delete</a>
-                    </div>
-                </div>
-            </li>
-            {% endfor %}
-        </ul>
+<header class="header">
+    <div class="logo-section">
+        <img src="{% static 'images/logo.png' %}" alt="{% trans 'Logo' %}" class="logo">
+        <h1>{% trans "Admin Dashboard" %}</h1>
     </div>
+</header>
+
+<div class="nightclub-list">
+    <h2>{% trans "Nightclubs" %}</h2>
+    <a href="{% url 'create-nightclub' %}" class="auth-button">{% trans "Create New Nightclub" %}</a>
+
+    <ul class="nightclubs">
+        {% for nightclub in nightclubs %}
+        <li class="nightclub-card">
+            <div class="nightclub-info">
+                <h3>{{ nightclub.name }}</h3>
+                <p>{{ nightclub.address }}</p>
+            </div>
+            <div class="nightclub-actions">
+                <!-- Details button -->
+                <a href="{% url 'nightclub-detail' nightclub.id %}" class="auth-button">{% trans "Tickets & Details" %}</a>
+                <!-- Edit/Delete buttons grouped together -->
+                <div class="edit-delete-buttons">
+                    <a href="{% url 'edit-nightclub' nightclub.id %}" class="auth-button">{% trans "Edit" %}</a>
+                    <a href="{% url 'delete-nightclub' nightclub.id %}" class="auth-button">{% trans "Delete" %}</a>
+                </div>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
 
 </body>
 </html>

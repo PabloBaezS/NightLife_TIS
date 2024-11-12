@@ -10,6 +10,8 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 import os
 from pathlib import Path
 
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -20,11 +22,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-%8f^t)e=wuiz--=%+v26-yjm-=!g3z+%a=^+fts^^e+s(x5_c+'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = [
     'nightlife-44569583944.us-central1.run.app',
     'nightlife.freesite.online',
+    '127.0.0.1',
+    'localhost'
 ]
 
 CSRF_TRUSTED_ORIGINS = [
@@ -117,9 +121,8 @@ USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 
-LOCALE_PATHS = [
-    os.path.join(BASE_DIR, 'locale'),
-]
+LOCALE_PATHS = [os.path.join(BASE_DIR, 'nightlife', 'locale')]
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/

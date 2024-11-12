@@ -3,9 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Cart</title>
     {% load static %}
-    {% load cart_extras %} <!-- Load the custom template filter -->
+{% load i18n %}
+{% load cart_extras %} <!-- Carga el filtro personalizado -->
+
+    <title>{% trans "Your Cart" %}</title>
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
 <body class="cart-page">
@@ -14,86 +16,106 @@
     <header class="cart-header">
         <div class="cart-logo-section">
             <a href="{% url 'home' %}">
-                <img src="{% static 'images/back-arrow.png' %}" alt="Back" class="back-arrow">
+                <img src="{% static 'images/back-arrow.png' %}" alt="{% trans "Back" %}" class="back-arrow">
             </a>
-            <h1><i class="fas fa-shopping-cart"></i> Your Cart</h1>
+            <h1><i class="fas fa-shopping-cart"></i> {% trans "Your Cart" %}</h1>
         </div>
     </header>
 
     <section class="cart-container">
         {% if cart_items %}
             <div class="order-summary">
-                <h2>Order Summary</h2>
+                <h2>{% trans "Order Summary" %}</h2>
                 <ul class="cart-items-list">
                     {% for item in cart_items %}
                         <li class="cart-item">
                             <h3>{{ item.ticket.get_ticket_type_display }}</h3>
-                            <p>Nightclub: {{ item.ticket.nightclub.name }}</p>
-                            <p>Quantity: {{ item.quantity }}</p>
-                            <p>Price: ${{ item.ticket.price }}</p>
-                            <p>Total: ${{ item.ticket.price|multiply:item.quantity }}</p>
-                            <!-- Botón para eliminar el ítem del carrito -->
+                            <p>{% trans "Nightclub" %}: {{ item.ticket.nightclub.name }}</p>
+                            <p>{% trans "Quantity" %}: {{ item.quantity }}</p>
+                            <p>{% trans "Price" %}: ${{ item.ticket.price }}</p>
+                            <p>{% trans "Total" %}: ${{ item.ticket.price|multiply:item.quantity }}</p>
+                            <!-- Button to remove item from cart -->
                             <form action="{% url 'remove-cart-item' item.id %}" method="post" class="remove-item-form">
                                 {% csrf_token %}
-                                <button type="submit" class="remove-item-btn">Remove</button>
+                                <button type="submit" class="remove-item-btn">{% trans "Remove" %}</button>
                             </form>
                         </li>
                     {% endfor %}
                 </ul>
                 <div class="order-total">
-                    <p><strong>Total Price:</strong> ${{ total_price }}</p>
+                    <p><strong>{% trans "Total Price" %}:</strong> ${{ total_price }}</p>
                 </div>
-                <a href="{% url 'payment' %}" class="checkout-btn">Continue to Payment</a>
+                <a href="{% url 'payment' %}" class="checkout-btn">{% trans "Continue to Payment" %}</a>
             </div>
         {% else %}
-            <p class="empty-cart-message">Your cart is empty.</p>
+            <p class="empty-cart-message">{% trans "Your cart is empty." %}</p>
         {% endif %}
     </section>
 
     <style>
-        /* Ajustar el tamaño del icono de la flecha de regreso */
+        /* Adjust back arrow icon size */
         .back-arrow {
             width: 24px;
             height: 24px;
         }
 
-        /* Estilos para separar visualmente los ítems del carrito */
+        /* Styles for cart items and list separation */
         .cart-item {
-            border-bottom: 1px solid #ccc;
-            padding: 10px 0;
-            margin-bottom: 10px;
+            border-bottom: 1px solid #ddd;
+            padding: 15px 0;
+            margin-bottom: 15px;
             display: flex;
             flex-direction: column;
-            gap: 5px;
+            gap: 8px;
+            font-size: 16px;
         }
 
-        /* Estilos para el botón de eliminación */
-        .remove-item-form {
-            display: inline-block;
-            margin-top: 5px;
-        }
-
-        .remove-item-btn {
-            background-color: #F60800;
-            color: white;
-            border: none;
-            padding: 5px 10px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 14px;
-        }
-
-        .remove-item-btn:hover {
-            background-color: #6B3FA0;
-        }
-
-        /* Separación visual para la lista de ítems */
         .cart-items-list {
             list-style: none;
             padding: 0;
             margin: 0;
         }
-    </style>
 
+        /* Styling remove button */
+        .remove-item-btn {
+            background-color: #ff5c5c;
+            color: white;
+            border: none;
+            padding: 7px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s;
+        }
+
+        .remove-item-btn:hover {
+            background-color: #cc0000;
+        }
+
+        /* Checkout button */
+        .checkout-btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 16px;
+            text-align: center;
+        }
+
+        .checkout-btn:hover {
+            background-color: #45a049;
+        }
+
+        /* Empty cart message */
+        .empty-cart-message {
+            text-align: center;
+            font-size: 18px;
+            color: #555;
+            margin-top: 50px;
+        }
+    </style>
 </body>
 </html>

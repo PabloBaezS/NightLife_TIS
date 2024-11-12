@@ -3,12 +3,11 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-11 16:11-0500\n"
+"POT-Creation-Date: 2024-11-12 17:57-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,79 +17,301 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: tickets/templates/tickets/home.html:8
-#: tickets/templates/tickets/ticket_list.html:8
-msgid "NightLife - Explore Nightclubs"
-msgstr "NightLife - Explora Discotecas"
+#: tickets/templates/tickets/cart.html:10
+#: tickets/templates/tickets/cart.html:21
+msgid "Your Cart"
+msgstr "Tu Carrito"
 
-#: tickets/templates/tickets/home.html:16
-#: tickets/templates/tickets/ticket_list.html:17
-msgid "NightLife Logo"
-msgstr "Logo de NightLife"
+#: tickets/templates/tickets/cart.html:19
+#: users/templates/users/profile.html:137
+msgid "Back"
+msgstr "Atrás"
 
-#: tickets/templates/tickets/home.html:17
-#: tickets/templates/tickets/ticket_list.html:18
-msgid "NightLife"
-msgstr "NightLife"
+#: tickets/templates/tickets/cart.html:28
+#: tickets/templates/tickets/payment.html:110
+msgid "Order Summary"
+msgstr "Resumen del Pedido"
 
-#: tickets/templates/tickets/home.html:24
-#: tickets/templates/tickets/ticket_list.html:32
-msgid "Profile Icon"
-msgstr "Icono de Perfil"
+#: tickets/templates/tickets/cart.html:33
+msgid "Nightclub"
+msgstr "Discoteca"
 
-#: tickets/templates/tickets/home.html:27
-#: tickets/templates/tickets/ticket_list.html:35
-msgid "Sign Up"
-msgstr "Registrarse"
+#: tickets/templates/tickets/cart.html:34
+#: tickets/templates/tickets/ticket_detail.html:30
+msgid "Quantity"
+msgstr "Cantidad"
 
-#: tickets/templates/tickets/home.html:28
-#: tickets/templates/tickets/ticket_list.html:36
-msgid "Login"
-msgstr "Iniciar Sesión"
-
-#: tickets/templates/tickets/home.html:47
-#: tickets/templates/tickets/ticket_list.html:45
-msgid "Search Icon"
-msgstr "Icono de Búsqueda"
-
-#: tickets/templates/tickets/home.html:49
-#: tickets/templates/tickets/ticket_list.html:47
-msgid "Where is the party?"
-msgstr "¿Dónde es la fiesta?"
-
-#: tickets/templates/tickets/home.html:54
-msgid "Nightclubs"
-msgstr "Discotecas"
-
-#: tickets/templates/tickets/ticket_list.html:25
-msgid "English"
-msgstr "Inglés"
-
-#: tickets/templates/tickets/ticket_list.html:26
-msgid "Español"
-msgstr "Español"
-
-#: tickets/templates/tickets/ticket_list.html:52
-msgid "Available Tickets for"
-msgstr "Entradas Disponibles para"
-
-#: tickets/templates/tickets/ticket_list.html:59
-msgid "Download JSON"
-msgstr "Descargar JSON"
-
-#: tickets/templates/tickets/ticket_list.html:59
-#: tickets/templates/tickets/ticket_list.html:60
-msgid "Download JSON Information"
-msgstr "Descargar Información JSON"
-
-#: tickets/templates/tickets/ticket_list.html:69
+#: tickets/templates/tickets/cart.html:35
+#: tickets/templates/tickets/ticket_detail.html:22
+#: tickets/templates/tickets/ticket_list.html:39
 msgid "Price"
 msgstr "Precio"
 
-#: tickets/templates/tickets/ticket_list.html:70
-msgid "View Details"
-msgstr "Ver Detalles"
+#: tickets/templates/tickets/cart.html:36
+msgid "Total"
+msgstr "Total"
 
-#: tickets/templates/tickets/ticket_list.html:78
+#: tickets/templates/tickets/cart.html:40
+msgid "Remove"
+msgstr "Eliminar"
+
+#: tickets/templates/tickets/cart.html:46
+#: tickets/templates/tickets/payment.html:111
+msgid "Total Price"
+msgstr "Precio Total"
+
+#: tickets/templates/tickets/cart.html:48
+msgid "Continue to Payment"
+msgstr "Continuar al Pago"
+
+#: tickets/templates/tickets/cart.html:51
+msgid "Your cart is empty."
+msgstr "Tu carrito está vacío."
+
+#: tickets/templates/tickets/home.html:8
+#: tickets/templates/tickets/ticket_list.html:8
+msgid "NightLife - Explore Nightclubs"
+msgstr "NightLife - Explora Clubes Nocturnos"
+
+#: tickets/templates/tickets/home.html:17
+#: tickets/templates/tickets/ticket_list.html:16
+#: users/templates/users/login.html:117 users/templates/users/register.html:126
+msgid "NightLife Logo"
+msgstr "Logo de NightLife"
+
+#: tickets/templates/tickets/home.html:18
+#: tickets/templates/tickets/ticket_list.html:17
+#: users/templates/users/login.html:118 users/templates/users/register.html:127
+msgid "NightLife"
+msgstr "NightLife"
+
+#: tickets/templates/tickets/home.html:26
+msgid "Profile Icon"
+msgstr "Icono de Perfil"
+
+#: tickets/templates/tickets/home.html:29 users/templates/users/login.html:124
+msgid "Sign Up"
+msgstr "Regístrate"
+
+#: tickets/templates/tickets/home.html:30 users/templates/users/login.html:141
+msgid "Login"
+msgstr "Iniciar Sesión"
+
+#: tickets/templates/tickets/home.html:37
+msgid "English"
+msgstr "Inglés"
+
+#: tickets/templates/tickets/home.html:38
+msgid "Español"
+msgstr "Español"
+
+#: tickets/templates/tickets/home.html:49
+msgid "Search Icon"
+msgstr "Icono de Búsqueda"
+
+#: tickets/templates/tickets/home.html:51
+msgid "Where is the party?"
+msgstr "¿Dónde es la fiesta?"
+
+#: tickets/templates/tickets/home.html:57
+#: users/templates/users/admin_dashboard.html:123
+msgid "Nightclubs"
+msgstr "Discotecas"
+
+#: tickets/templates/tickets/order_confirmation.html:8
+msgid "Order Confirmation - NightLife"
+msgstr "Confirmación de Pedido - NightLife"
+
+#: tickets/templates/tickets/order_confirmation.html:78
+msgid "Order Confirmation"
+msgstr "Confirmación de Pedido"
+
+#: tickets/templates/tickets/order_confirmation.html:82
+msgid "Thank you for your order!"
+msgstr "¡Gracias por tu pedido!"
+
+#: tickets/templates/tickets/order_confirmation.html:83
+msgid "Your order ID is"
+msgstr "Tu ID de pedido es"
+
+#: tickets/templates/tickets/order_confirmation.html:84
+msgid "You can download your receipt below:"
+msgstr "Puedes descargar tu recibo a continuación:"
+
+#: tickets/templates/tickets/order_confirmation.html:85
+msgid "Download Receipt"
+msgstr "Descargar Recibo"
+
+#: tickets/templates/tickets/payment.html:8
+msgid "Payment Page"
+msgstr "Página de Pago"
+
+#: tickets/templates/tickets/payment.html:118
+msgid "Credit Card"
+msgstr "Tarjeta de Crédito"
+
+#: tickets/templates/tickets/payment.html:121
+msgid "Card Number"
+msgstr "Número de Tarjeta"
+
+#: tickets/templates/tickets/payment.html:127
+msgid "Account Balance"
+msgstr "Saldo de la Cuenta"
+
+#: tickets/templates/tickets/payment.html:131
+msgid "Submit Payment"
+msgstr "Realizar Pago"
+
+#: tickets/templates/tickets/ticket_detail.html:21
+msgid "Description"
+msgstr "Descripción"
+
+#: tickets/templates/tickets/ticket_detail.html:23
+msgid "Category"
+msgstr "Categoría"
+
+#: tickets/templates/tickets/ticket_detail.html:24
+msgid "NightClub"
+msgstr "Discoteca"
+
+#: tickets/templates/tickets/ticket_detail.html:32
+msgid "Add to Cart"
+msgstr "Añadir al Carrito"
+
+#: tickets/templates/tickets/ticket_list.html:24
+msgid "Available Tickets for"
+msgstr "Entradas Disponibles para"
+
+#: tickets/templates/tickets/ticket_list.html:29
+msgid "Download JSON"
+msgstr "Descargar JSON"
+
+#: tickets/templates/tickets/ticket_list.html:30
+msgid "Download JSON Information"
+msgstr "Descargar Información JSON"
+
+#: tickets/templates/tickets/ticket_list.html:40
+msgid "Buy Now"
+msgstr "Comprar Ahora"
+
+#: tickets/templates/tickets/ticket_list.html:48
 msgid "Location of"
 msgstr "Ubicación de"
+
+#: users/templates/users/admin_dashboard.html:8
+#: users/templates/users/admin_dashboard.html:118
+#: users/templates/users/profile.html:164
+msgid "Admin Dashboard"
+msgstr "Panel de Administración"
+
+#: users/templates/users/admin_dashboard.html:117
+msgid "Logo"
+msgstr "Logo"
+
+#: users/templates/users/admin_dashboard.html:124
+msgid "Create New Nightclub"
+msgstr "Crear Nueva Discoteca"
+
+#: users/templates/users/admin_dashboard.html:135
+msgid "Tickets & Details"
+msgstr "Entradas y Detalles"
+
+#: users/templates/users/admin_dashboard.html:138
+msgid "Edit"
+msgstr "Editar"
+
+#: users/templates/users/admin_dashboard.html:139
+msgid "Delete"
+msgstr "Eliminar"
+
+#: users/templates/users/login.html:8
+msgid "NightLife - Login"
+msgstr "NightLife - Iniciar Sesión"
+
+#: users/templates/users/login.html:123
+msgid "Sign In"
+msgstr "Iniciar Sesión"
+
+#: users/templates/users/login.html:130
+msgid "Welcome back!"
+msgstr "¡Bienvenido de nuevo!"
+
+#: users/templates/users/login.html:134
+msgid "Username"
+msgstr "Nombre de usuario"
+
+#: users/templates/users/login.html:138 users/templates/users/register.html:165
+msgid "Password"
+msgstr "Contraseña"
+
+#: users/templates/users/profile.html:8 users/templates/users/profile.html:139
+msgid "Profile"
+msgstr "Perfil"
+
+#: users/templates/users/profile.html:150
+msgid "Order History"
+msgstr "Historial de Pedidos"
+
+#: users/templates/users/profile.html:153
+msgid "Order"
+msgstr "Pedido"
+
+#: users/templates/users/profile.html:155
+msgid "No orders yet."
+msgstr "Aún no hay pedidos."
+
+#: users/templates/users/profile.html:170
+msgid "Log out"
+msgstr "Cerrar Sesión"
+
+#: users/templates/users/register.html:8
+msgid "NightLife - Register"
+msgstr "NightLife - Registro"
+
+#: users/templates/users/register.html:132
+msgid "Log in"
+msgstr "Iniciar Sesión"
+
+#: users/templates/users/register.html:133
+msgid "Sign up"
+msgstr "Regístrate"
+
+#: users/templates/users/register.html:139
+msgid "Register for a better experience"
+msgstr "Regístrate para una mejor experiencia"
+
+#: users/templates/users/register.html:145
+msgid "Email"
+msgstr "Correo Electrónico"
+
+#: users/templates/users/register.html:150
+msgid "Full name"
+msgstr "Nombre Completo"
+
+#: users/templates/users/register.html:156
+msgid "ID Type"
+msgstr "Tipo de Identificación"
+
+#: users/templates/users/register.html:157
+msgid "Passport"
+msgstr "Pasaporte"
+
+#: users/templates/users/register.html:158
+msgid "Driver's License"
+msgstr "Licencia de Conducir"
+
+#: users/templates/users/register.html:160
+msgid "Identification document"
+msgstr "Documento de Identificación"
+
+#: users/templates/users/register.html:170
+msgid "Confirm Password"
+msgstr "Confirmar Contraseña"
+
+#: users/templates/users/register.html:173
+msgid "Create Account"
+msgstr "Crear Cuenta"
+
+#: users/templates/users/register.html:178
+msgid "Skip for now"
+msgstr "Omitir por ahora"

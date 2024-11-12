@@ -3,60 +3,70 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Order Confirmation - NightLife</title>
-    {% load static %}
+     {% load static %}
+{% load i18n %}
+    <title>{% trans "Order Confirmation - NightLife" %}</title>
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
     <style>
-        /* Basic styling for body */
+        /* General page styling */
         body {
             background-color: #000117;
-            color: white;
+            color: #ffffff;
             font-family: 'Arial', sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
-            flex-direction: column;
+            padding: 20px;
         }
 
+        /* Header styling */
         header h1 {
             font-size: 32px;
             color: #F60800;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
+            text-align: center;
         }
 
-        section {
+        /* Section container */
+        .confirmation-container {
             background-color: #1c1c1c;
-            padding: 30px;
+            padding: 40px 30px;
             border-radius: 15px;
             text-align: center;
-            width: 400px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 450px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
         }
 
-        section p {
+        /* Paragraph styling */
+        .confirmation-container p {
             font-size: 18px;
             color: #bbb;
             margin: 15px 0;
+            line-height: 1.6;
         }
 
-        section strong {
+        /* Strong emphasis for order ID */
+        .confirmation-container strong {
             color: #F60800;
         }
 
+        /* Button styling */
         .home-btn {
             background-color: #6B3FA0;
             color: white;
             text-decoration: none;
-            padding: 15px 30px;
+            padding: 12px 30px;
             border-radius: 8px;
             margin-top: 20px;
-            display: inline-block;
             font-size: 16px;
             transition: background-color 0.3s ease;
+            display: inline-block;
         }
 
+        /* Hover effect for button */
         .home-btn:hover {
             background-color: #F60800;
         }
@@ -65,16 +75,15 @@
 <body>
 
     <header>
-        <h1>Order Confirmation</h1>
+        <h1>{% trans "Order Confirmation" %}</h1>
     </header>
 
-    <!-- order_confirmation.html -->
-<section>
-    <p>Thank you for your order!</p>
-    <p>Your order ID is: <strong>{{ order.order_id }}</strong></p>
-    <p>You can download your receipt below:</p>
-    <a href="{% url 'download-receipt' order.id %}" class="home-btn">Download Receipt</a>
-</section>
+    <section class="confirmation-container">
+        <p>{% trans "Thank you for your order!" %}</p>
+        <p>{% trans "Your order ID is" %}: <strong>{{ order.order_id }}</strong></p>
+        <p>{% trans "You can download your receipt below:" %}</p>
+        <a href="{% url 'download-receipt' order.id %}" class="home-btn">{% trans "Download Receipt" %}</a>
+    </section>
 
 </body>
 </html>

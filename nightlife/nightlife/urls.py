@@ -2,6 +2,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
+from django.conf.urls.i18n import set_language
 from django.conf.urls.i18n import i18n_patterns
 
 # Configuración de rutas principales con prefijo de idioma
@@ -14,9 +15,10 @@ urlpatterns = i18n_patterns(
 
 # Incluye la ruta para el cambio de idioma fuera de i18n_patterns
 urlpatterns += [
-    path('i18n/', include('django.conf.urls.i18n')),
+    path('i18n/set_language/', set_language, name='set_language'),  # Asegúrate de esta línea
 ]
 
 # Configuración para archivos estáticos y media en modo DEBUG
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+

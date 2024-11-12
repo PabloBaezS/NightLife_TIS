@@ -3,42 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Payment Page</title>
-    {% load static %}
+     {% load static %}
+{% load i18n %}
+    <title>{% trans "Payment Page" %}</title>
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
     <style>
-        /* Basic styles for form */
+        /* Basic page styling */
         body {
             background-color: #000117;
-            color: white;
+            color: #ffffff;
             font-family: Arial, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
+            padding: 20px;
         }
 
+        /* Form container styling */
         form {
             background-color: #1c1c1c;
             padding: 30px;
             border-radius: 15px;
-            width: 400px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 450px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
         }
 
+        /* Title styling */
         h2 {
             text-align: center;
             color: #F60800;
-            font-size: 24px;
-            margin-bottom: 20px;
+            font-size: 28px;
+            margin-bottom: 25px;
         }
 
+        /* Order summary styling */
         .payment-summary {
             background-color: #2c2c2c;
-            padding: 15px;
+            padding: 20px;
             border-radius: 10px;
             margin-bottom: 20px;
+            text-align: center;
         }
 
         .payment-summary p {
@@ -47,26 +54,36 @@
             color: #bbb;
         }
 
+        /* Payment options styling */
         .payment-options {
             display: flex;
             flex-direction: column;
             gap: 15px;
+            margin-top: 10px;
         }
 
+        label {
+            font-size: 16px;
+            color: #ccc;
+        }
+
+        /* Input styling */
         input[type="text"] {
             background-color: #2c2c2c;
-            border: none;
-            padding: 15px;
+            border: 1px solid #555;
+            padding: 12px;
             color: white;
             font-size: 16px;
             border-radius: 8px;
             width: 100%;
+            margin-top: 10px;
         }
 
         input[type="text"]::placeholder {
             color: #888;
         }
 
+        /* Button styling */
         .button--checkout {
             background-color: #F60800;
             color: white;
@@ -77,6 +94,7 @@
             cursor: pointer;
             width: 100%;
             transition: background-color 0.3s ease;
+            margin-top: 20px;
         }
 
         .button--checkout:hover {
@@ -87,32 +105,31 @@
 <body>
 
     <form method="POST" action="{% url 'payment' %}">
-    {% csrf_token %}
-    <div class="payment-summary">
-        <h2>Order Summary</h2>
-        <p><strong>Total Price:</strong> ${{ total_price }}</p>
-        <input type="hidden" name="total_price" value="{{ total_price }}">
-    </div>
-
-    <div class="payment-options">
-        <label>
-            <input type="radio" name="payment_method" value="credit_card" required>
-            Credit Card
-        </label>
-        <div id="credit-card-fields">
-            <input type="text" name="card_number" placeholder="Card Number">
-            <!-- Add other card details as needed -->
+        {% csrf_token %}
+        <div class="payment-summary">
+            <h2>{% trans "Order Summary" %}</h2>
+            <p><strong>{% trans "Total Price" %}:</strong> ${{ total_price }}</p>
+            <input type="hidden" name="total_price" value="{{ total_price }}">
         </div>
 
-        <label>
-            <input type="radio" name="payment_method" value="account_balance" required>
-            Account Balance
-        </label>
-    </div>
+        <div class="payment-options">
+            <label>
+                <input type="radio" name="payment_method" value="credit_card" required>
+                {% trans "Credit Card" %}
+            </label>
+            <div id="credit-card-fields">
+                <input type="text" name="card_number" placeholder="{% trans 'Card Number' %}">
+                <!-- Additional card fields can be added here if needed -->
+            </div>
 
-    <button type="submit" class="button button--checkout">Submit Payment</button>
-</form>
+            <label>
+                <input type="radio" name="payment_method" value="account_balance" required>
+                {% trans "Account Balance" %}
+            </label>
+        </div>
 
+        <button type="submit" class="button button--checkout">{% trans "Submit Payment" %}</button>
+    </form>
 
 </body>
 </html>
