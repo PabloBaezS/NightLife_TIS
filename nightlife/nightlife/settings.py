@@ -22,7 +22,8 @@ SECRET_KEY = 'django-insecure-%8f^t)e=wuiz--=%+v26-yjm-=!g3z+%a=^+fts^^e+s(x5_c+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['*',  'https://nightlife-44569583944.us-central1.run.app',
+    'https://nightlife.freesite.online']
 
 
 # Application definition
