@@ -138,3 +138,8 @@ GOOGLE_MAPS_API_KEY = os.getenv('GOOGLE_MAPS_API_KEY', 'YOUR_API_KEY')
 # Language Cookie settings
 LANGUAGE_COOKIE_NAME = 'django_language'
 LANGUAGE_COOKIE_HTTPONLY = True
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://nightlife-44569583944.us-central1.run.app',
+    'https://nightlife.freesite.online'
+]
