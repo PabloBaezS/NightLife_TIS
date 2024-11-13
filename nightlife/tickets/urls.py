@@ -1,6 +1,9 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from . import views
+from django.urls import path
+from tickets.views import test_translation_view
+from .views import debug_language_view
 
 router = DefaultRouter()
 router.register(r'api/nightclubs', views.NightClubViewSet, basename='nightclub')
@@ -19,4 +22,15 @@ urlpatterns = [
     path('cart/remove/<int:item_id>/', views.remove_cart_item, name='remove-cart-item'),
     path('download-receipt/<int:order_id>/', views.download_receipt,
          name='download-receipt'),
+
+    #path('test-translation/', test_translation_view),
+    #path('debug-language/', debug_language_view),
+
 ]
+
+from django.conf.urls.i18n import set_language
+
+urlpatterns += [
+    path('i18n/set_language/', set_language, name='set_language'),
+]
+

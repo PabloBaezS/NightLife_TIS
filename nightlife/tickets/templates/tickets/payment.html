@@ -3,12 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     {% load static %}
-{% load i18n %}
+    {% load static %}
+    {% load i18n %}
     <title>{% trans "Payment Page" %}</title>
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
     <style>
-        /* Basic page styling */
         body {
             background-color: #000117;
             color: #ffffff;
@@ -20,8 +19,6 @@
             margin: 0;
             padding: 20px;
         }
-
-        /* Form container styling */
         form {
             background-color: #1c1c1c;
             padding: 30px;
@@ -30,16 +27,12 @@
             max-width: 450px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
         }
-
-        /* Title styling */
         h2 {
             text-align: center;
             color: #F60800;
             font-size: 28px;
             margin-bottom: 25px;
         }
-
-        /* Order summary styling */
         .payment-summary {
             background-color: #2c2c2c;
             padding: 20px;
@@ -47,27 +40,21 @@
             margin-bottom: 20px;
             text-align: center;
         }
-
         .payment-summary p {
             margin: 0;
             font-size: 18px;
             color: #bbb;
         }
-
-        /* Payment options styling */
         .payment-options {
             display: flex;
             flex-direction: column;
             gap: 15px;
             margin-top: 10px;
         }
-
         label {
             font-size: 16px;
             color: #ccc;
         }
-
-        /* Input styling */
         input[type="text"] {
             background-color: #2c2c2c;
             border: 1px solid #555;
@@ -78,12 +65,9 @@
             width: 100%;
             margin-top: 10px;
         }
-
         input[type="text"]::placeholder {
             color: #888;
         }
-
-        /* Button styling */
         .button--checkout {
             background-color: #F60800;
             color: white;
@@ -96,13 +80,29 @@
             transition: background-color 0.3s ease;
             margin-top: 20px;
         }
-
         .button--checkout:hover {
             background-color: #6B3FA0;
+        }
+        .logo-section {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .logo-section img {
+            height: 40px;
+            margin-right: 10px;
         }
     </style>
 </head>
 <body>
+
+    <div class="logo-section">
+        <a href="{% url 'home' %}">
+            <img src="{% static 'images/logo.png' %}" alt="{% trans 'NightLife Logo' %}">
+            <h1>{% trans "NightLife" %}</h1>
+        </a>
+    </div>
 
     <form method="POST" action="{% url 'payment' %}">
         {% csrf_token %}
@@ -119,7 +119,6 @@
             </label>
             <div id="credit-card-fields">
                 <input type="text" name="card_number" placeholder="{% trans 'Card Number' %}">
-                <!-- Additional card fields can be added here if needed -->
             </div>
 
             <label>
@@ -128,7 +127,7 @@
             </label>
         </div>
 
-        <button type="submit" class="button button--checkout">{% trans "Submit Payment" %}</button>
+        <button type="submit" class="button--checkout">{% trans "Submit Payment" %}</button>
     </form>
 
 </body>

@@ -18,20 +18,15 @@ from django.shortcuts import redirect
 
 def set_language_in_view(request):
     if request.method == 'POST':
-        # Obtén el idioma seleccionado del formulario
-        language = request.POST.get('language', 'en')
+        language = request.POST.get('language', 'en')  # Idioma predeterminado: inglés
         # Activa el idioma seleccionado
         translation.activate(language)
-        # Almacena el idioma en la sesión usando la clave 'django_language'
+        # Almacena el idioma en la sesión
         request.session['django_language'] = language
-        # Redirige a la página previa para aplicar el cambio de idioma
-        return redirect(request.META.get('HTTP_REFERER', '/'))
-    else:
-        # Usa el idioma almacenado en la sesión, o 'en' si no está definido
-        language = request.session.get('django_language', 'en')
-        translation.activate(language)
-        request.LANGUAGE_CODE = language
-        return redirect(request.META.get('HTTP_REFERER', '/'))
+        # Almacena el idioma en la cookie
+        response = redirect(request.META.get('HTTP_REFERER', '/'))
+        response.set_cookie('django_language', language)
+        return response
 
 
 
@@ -168,8 +163,6 @@ def payment_view(request):
     return render(request, 'tickets/payment.html', {'total_price': total_price})
 
 
-
-
 def payment_success_view(request):
     set_language_in_view(request)  # Activar idioma según sesión
     return render(request, 'payment_success.html')
@@ -221,3 +214,19 @@ def download_nightclub_json(request, pk):
 def download_receipt(request, order_id):
     buffer = generate_pdf_receipt(order_id)
     return FileResponse(buffer, as_attachment=True, filename=f"Receipt_Order_{order_id}.pdf")
+
+
+from django.shortcuts import HttpResponse
+from django.utils.translation import gettext as _
+from django.utils import translation
+from django.utils.translation import get_language
+
+
+def test_translation_view(request):
+    translation.activate('es')
+    text = _("NightLife - Explore Nightclubs")
+    return HttpResponse(text)
+
+def debug_language_view(request):
+    current_language = get_language()
+    return HttpResponse(f"Current Language: {current_language}")

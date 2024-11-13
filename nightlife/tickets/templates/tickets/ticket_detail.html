@@ -12,6 +12,9 @@
 
     <!-- Header del Ticket -->
     <header class="ticket-header">
+        <a href="{% url 'home' %}">
+                <img src="{% static 'images/back-arrow.png' %}" alt="{% trans "Back" %}" class="back-arrow">
+            </a>
         <h1>{{ ticket.name }}</h1>
     </header>
 
@@ -126,6 +129,17 @@
             background-color: #D53A4D;
             transform: scale(1.05);
         }
+        .back-arrow {
+            width: 24px;
+            height: 24px;
+        }
+
+        .logo-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: inherit;
+}
     </style>
 </body>
 </html>

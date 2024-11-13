@@ -13,8 +13,15 @@
 <!-- Header Section -->
 <header class="header">
     <div class="logo-section">
-        <img src="{% static 'images/logo.png' %}" alt="{% trans 'NightLife Logo' %}" class="logo">
-        <h1>{% trans "NightLife" %}</h1>
+    <a href="{% url 'home' %}">
+                <img src="{% static 'images/back-arrow.png' %}" alt="{% trans "Back" %}" class="back-arrow">
+            </a>
+
+        <div class="logo-section">
+        <a href="{% url 'home' %}" class="logo-link">
+            <img src="{% static 'images/logo.png' %}" alt="{% trans 'NightLife Logo' %}" class="logo">
+            <h1>{% trans "NightLife" %}</h1>
+        </a>
     </div>
 
 </header>
@@ -25,10 +32,12 @@
 
     <div class="nightclub-info-section">
         <p>{{ nightclub.description }}</p>
-        <a href="{% url 'download-nightclub-json' nightclub.id %}" class="info-icon">
-            <img src="{% static 'images/info.png' %}" alt="{% trans 'Download JSON' %}" title="{% trans 'Download JSON Information' %}">
-            {% trans "Download JSON Information" %}
-        </a>
+    </div>
+<div class="nightclub-info-section">
+         <a href="{% url 'download-nightclub-json' nightclub.id %}" class="info-icon">
+        <img src="{% static 'images/info.png' %}" alt="{% trans 'Download JSON' %}" title="{% trans 'Download JSON Information' %}">
+            {% trans " | Download JSON Information" %}
+             </a>
     </div>
 
     <!-- Tickets List -->
@@ -209,6 +218,18 @@
     .info-icon:hover {
         color: #D53A4D;
     }
+            /* Adjust back arrow icon size */
+        .back-arrow {
+            width: 24px;
+            height: 24px;
+        }
+
+        .logo-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: inherit;
+}
 </style>
 
 </body>

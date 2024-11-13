@@ -36,6 +36,11 @@ body {
     background-color: #6B3FA0;
 }
 
+a {
+    text-decoration: none; /* Quita la línea debajo del enlace */
+    color: inherit; /* Mantiene el color del texto */
+}
+
 /* Aligning the "Details" arrow icon separately from Edit/Delete buttons */
 .details-button {
     font-size: 24px;

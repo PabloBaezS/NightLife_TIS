@@ -14,12 +14,7 @@ class CreditCardPaymentProcessor(PaymentProcessor):
 
 class AccountBalancePaymentProcessor(PaymentProcessor):
     def process_payment(self, user, order, amount, **kwargs):
-        # Simular lógica de pago desde el saldo de la cuenta
-        if user.profile.balance >= amount:
-            user.profile.balance -= amount
-            user.profile.save()
-            payment = Payment(order=order, amount=amount, payment_status='completed')
-            payment.save()
-            return payment
-        else:
-            raise ValueError("Saldo insuficiente")
+        payment = Payment(order=order, amount=amount,
+                          payment_status='completed')
+        payment.save()
+        return payment

@@ -9,6 +9,12 @@
 
     <title>{% trans "Your Cart" %}</title>
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <div class="logo-section">
+        <a href="{% url 'home' %}" class="logo-link">
+            <img src="{% static 'images/logo.png' %}" alt="{% trans 'NightLife Logo' %}" class="logo">
+            <h1>{% trans "NightLife" %}</h1>
+        </a>
+    </div>
 </head>
 <body class="cart-page">
 
@@ -116,6 +122,13 @@
             color: #555;
             margin-top: 50px;
         }
+
+        .logo-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: inherit;
+}
     </style>
 </body>
 </html>
